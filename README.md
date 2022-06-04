@@ -2,7 +2,7 @@ This is Mike's test edit for a merge conflict
 
 
 # Tetris Project
-
+This is Danny's ReadMe
 
 
 ## Getting started
