@@ -1,3 +1,6 @@
+This is Mike's test edit for a merge conflict
+
+
 # Tetris Project
 
 
