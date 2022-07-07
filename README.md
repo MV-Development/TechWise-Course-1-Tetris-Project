@@ -1,3 +1,5 @@
+Testing pyCharm integration
+
 This is Mike's test edit for a merge conflict
 
 
