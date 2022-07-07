@@ -4,6 +4,7 @@ import sys
 import os
 
 pygame.init()
+
 #window variables
 w_width = 800
 w_height = 800
