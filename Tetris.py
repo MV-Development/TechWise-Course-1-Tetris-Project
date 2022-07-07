@@ -14,6 +14,7 @@ pygame.mouse.set_visible(0)
 pygame.display.set_caption('Tetris')
 programIcon = pygame.image.load('icon.png')
 pygame.display.set_icon(programIcon)
+
 #main loop
 while True:
 	for event in pygame.event.get():
