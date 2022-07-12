@@ -30,10 +30,12 @@ pygame.mixer.music.play(-1)
 
 def game():
     pygame.mixer.music.stop()
-    pygame.mixer.music.load('')
+    pygame.mixer.music.load('endlessmotion.wav')
+    pygame.mixer.music.play(-1)
     pygame.mouse.set_visible(False)
     while True:
         for event in pygame.event.get():
+            # spacebar quits game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pygame.quit()
