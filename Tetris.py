@@ -18,9 +18,6 @@ program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
 
-#
-# NEED TO ADD ACTUAL DIMENSIONS OF PLAYING FIELD AND GRID SIZE
-#
 def draw_grid():
     # gets distance between lines
     block_size = 30
