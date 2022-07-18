@@ -39,6 +39,7 @@ def draw_grid():
 
         pygame.draw.line(screen, (255, 255, 255), (250, y), (w_width - 250, y))
 
+
 def game():
     # change screen color
     screen.fill((0, 0, 0))
@@ -104,3 +105,11 @@ def main_menu():
 
 
 main_menu()
+
+
+def game_loop(board_state, score):
+# Update board
+# spawn piece
+# drop piece, check for collision, take input
+# stop piece, check for full row
+# refresh board accordingly
