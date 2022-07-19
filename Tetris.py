@@ -3,6 +3,9 @@ import random
 import sys
 import os
 
+import hud
+
+WHITE = (255, 255, 255)
 pygame.init()
 pygame.font.init()
 
@@ -46,6 +49,8 @@ def draw_grid():
 def game():
     # change screen color
     screen.fill((0, 0, 0))
+    # draw_grid()
+    # hud.create_hud(screen)  ###ATTEMPT AT GAME CLOCK
     draw_grid()
     pygame.display.flip()
     # pygame.mixer.music.stop()
