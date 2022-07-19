@@ -42,6 +42,7 @@ def draw_grid():
             pygame.draw.rect(screen, WHITE, pygame.Rect(x, y, 30, 30), 1)
             x += 30
 
+
 def game():
     # change screen color
     screen.fill((0, 0, 0))
@@ -120,3 +121,20 @@ main_menu()
 #   stop piece, check for full row
 #   determine game state
 
+
+# def draw_board(game_pieces):
+#   if board_state == 0
+#       create_grid()
+#       break
+#   draw grid row by row
+#   treat existing blocks as individual squares
+
+
+# def collision_detection(piece_position):
+#   identify lowest parts of current game piece
+#   check color of adjacent block
+
+
+# def rotate(piece_orientation):
+#   on event up key down rotate
+#   change surrounding colors
