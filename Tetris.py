@@ -9,6 +9,7 @@ pygame.font.init()
 # window variables
 w_width = 800
 w_height = 800
+block_size = 30
 
 # screen initialization
 screen = pygame.display.set_mode((w_width, w_height))
@@ -18,27 +19,28 @@ program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
 
+class Piece:
+    def __init__(self, x, y, tetro):
+        self.x = x
+        self.y = y
+        self.tetro = tetro
+
+
+def create_grid():
+    # (rgb), x, y, l, w
+    return [[(255, 255, 255) for _ in range(10)] for _ in range(20)]
+
+
 def draw_grid():
-    # gets distance between lines
-    block_size = 30
-    # gets x position
-    x = 220
-    # gets y position
+    grid = create_grid()
+    x = 170
     y = 70
-
-    for _ in range(11):
-        # moves x and y every iteration one block
-        x = x + block_size
-
-        # adds a white line every block over on the x axis across whole screen
-        pygame.draw.line(screen, (255, 255, 255), (x, 100), (x, w_width - 100))
-
-    for _ in range(21):
-        y = y + block_size
-        # adds a white line every block up on the y axis across whole screen
-
-        pygame.draw.line(screen, (255, 255, 255), (250, y), (w_width - 250, y))
-
+    for i in range(20):
+        pygame.draw.rect(screen, WHITE, pygame.Rect(x, y, 30, 30), 1)
+        y += 30
+        for j in range(10):
+            pygame.draw.rect(screen, WHITE, pygame.Rect(x, y, 30, 30), 1)
+            x += 30
 
 def game():
     # change screen color
@@ -48,9 +50,10 @@ def game():
     # pygame.mixer.music.stop()
     # pygame.mixer.music.load('endlessmotion.wav')
     # pygame.mixer.music.play(-1)
-
+    # new_piece()
     pygame.mouse.set_visible(False)
     while True:
+        pygame.display.update()
         for event in pygame.event.get():
             # spacebar quits game
             if event.type == pygame.KEYDOWN:
@@ -107,9 +110,13 @@ def main_menu():
 main_menu()
 
 
-def game_loop(board_state, score):
-# Update board
-# spawn piece
-# drop piece, check for collision, take input
-# stop piece, check for full row
-# refresh board accordingly
+# def game_loop(board_state, score):
+#   draw_board
+#   spawn piece
+#   while piece is moving
+#       check for collision
+#       take input
+#       drop piece
+#   stop piece, check for full row
+#   determine game state
+
