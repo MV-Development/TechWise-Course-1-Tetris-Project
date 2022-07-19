@@ -5,9 +5,11 @@ import os
 
 import hud
 
-WHITE = (255, 255, 255)
 pygame.init()
 pygame.font.init()
+
+WHITE, BLACK, BLUE, RED, GREEN = (255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0), (0, 255, 0)
+BLOCK_SIZE = 30
 
 # window variables
 w_width = 800
@@ -21,6 +23,9 @@ program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
 
+pygame.draw.rect(screen, GREEN, pygame.Rect(100, 100, BLOCK_SIZE, BLOCK_SIZE))
+
+
 class Piece:
     def __init__(self, x, y, tetro):
         self.x = x
@@ -30,7 +35,7 @@ class Piece:
 
 def create_grid():
     # (rgb), x, y, l, w
-    return [[(255, 255, 255) for _ in range(10)] for _ in range(20)]
+    return [[WHITE for _ in range(10)] for _ in range(20)]
 
 
 def draw_grid():
@@ -44,9 +49,10 @@ def draw_grid():
         pygame.draw.line(screen, (255, 255, 255), (x, 100), (x, w_width - 100))
         x += BLOCK_SIZE
 
+
 def game():
     # change screen color
-    screen.fill((0, 0, 0))
+    screen.fill(BLACK)
     # draw_grid()
     # hud.create_hud(screen)  ###ATTEMPT AT GAME CLOCK
     draw_grid()
@@ -72,17 +78,17 @@ def game():
 def main_menu():
     # main menu
     # start game button
-    start_button = pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(320, 350, 160, 100))
+    start_button = pygame.draw.rect(screen, BLUE, pygame.Rect(320, 350, 160, 100))
 
     # quit game button
-    quit_button = pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(320, 550, 160, 100))
+    quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
     # text on buttons
     font = pygame.font.SysFont('Arial', 30)
-    start_text = font.render('Start', False, (0, 0, 0))
+    start_text = font.render('Start', False, BLACK)
     start_rect = start_text.get_rect(center=start_button.center)
     screen.blit(start_text, start_rect)
-    quit_text = font.render('Quit', False, (0, 0, 0))
+    quit_text = font.render('Quit', False, BLACK)
     quit_rect = quit_text.get_rect(center=quit_button.center)
     screen.blit(quit_text, quit_rect)
 
