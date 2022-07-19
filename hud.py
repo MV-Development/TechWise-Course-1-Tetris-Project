@@ -1,6 +1,5 @@
 import pygame.time
 
-<<<<<<< HEAD
 #CREATING HUD TO DISPLAY TIME AND SCORE
 def create_hud():
     gameClock = pygame.time.Clock()
@@ -11,7 +10,6 @@ def create_hud():
     screen.blit(display, (50, 50))
     pg.display.flip()
     clock.tick(1000)
-=======
 
 def create_hud(screen):
     passed_time = 0
@@ -22,4 +20,3 @@ def create_hud(screen):
     text = font.render(str(passed_time / 1000), True, font_color)
     screen.blit(text, (50, 50))
     pygame.display.flip()
->>>>>>> origin/main

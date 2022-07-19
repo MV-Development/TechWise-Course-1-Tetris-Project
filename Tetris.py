@@ -12,7 +12,6 @@ pygame.font.init()
 # window variables
 w_width = 800
 w_height = 800
-block_size = 30
 
 # screen initialization
 screen = pygame.display.set_mode((w_width, w_height))
@@ -36,15 +35,14 @@ def create_grid():
 
 def draw_grid():
     grid = create_grid()
-    x = 170
-    y = 70
-    for i in range(20):
-        pygame.draw.rect(screen, WHITE, pygame.Rect(x, y, 30, 30), 1)
-        y += 30
-        for j in range(10):
-            pygame.draw.rect(screen, WHITE, pygame.Rect(x, y, 30, 30), 1)
-            x += 30
-
+    x = 250
+    y = 100
+    for i in range(21):
+        pygame.draw.line(screen, (255, 255, 255), (250, y), (w_width - 250, y))
+        y += BLOCK_SIZE
+    for j in range(11):
+        pygame.draw.line(screen, (255, 255, 255), (x, 100), (x, w_width - 100))
+        x += BLOCK_SIZE
 
 def game():
     # change screen color
