@@ -115,6 +115,11 @@ def main_menu():
 
 main_menu()
 
+# 4x4 grid
+# 0   1    2    3
+# 4   5    6    7
+# 8   9    10   11
+# 12  13   14   15
 
 # def game_loop(board_state, score):
 #   draw_board
