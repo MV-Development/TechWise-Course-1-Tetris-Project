@@ -54,7 +54,6 @@ def game():
     # change screen color
     screen.fill(BLACK)
     # draw_grid()
-    hud.create_hud(screen)  ###ATTEMPT AT GAME CLOCK
     draw_grid()
     pygame.display.flip()
     # pygame.mixer.music.stop()
@@ -62,7 +61,9 @@ def game():
     # pygame.mixer.music.play(-1)
     # new_piece()
     pygame.mouse.set_visible(False)
+    start_time = pygame.time.get_ticks()
     while True:
+        hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
         pygame.display.update()
         for event in pygame.event.get():
             # spacebar quits game
