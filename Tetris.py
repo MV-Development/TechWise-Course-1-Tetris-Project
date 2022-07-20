@@ -54,7 +54,7 @@ def game():
     # change screen color
     screen.fill(BLACK)
     # draw_grid()
-    # hud.create_hud(screen)  ###ATTEMPT AT GAME CLOCK
+    hud.create_hud(screen)  ###ATTEMPT AT GAME CLOCK
     draw_grid()
     pygame.display.flip()
     # pygame.mixer.music.stop()
