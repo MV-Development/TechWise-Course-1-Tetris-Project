@@ -22,7 +22,6 @@ pygame.display.set_caption('Tetris')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
-
 pygame.draw.rect(screen, GREEN, pygame.Rect(100, 100, BLOCK_SIZE, BLOCK_SIZE))
 
 
@@ -33,27 +32,72 @@ class Piece:
         self.tetro = tetro
 
 
-def create_grid():
+def create_grid(fallen={}):
     # (rgb), x, y, l, w
-    return [[WHITE for _ in range(10)] for _ in range(20)]
+    grid = [[BLACK for _ in range(10)] for _ in range(20)]
+    for a in range(len(grid)):
+        for b in range(len(grid[a])):
+            if (b, a) in fallen:
+                c = fallen[(b, a)]
+                grid[i][j] = c
+    return grid
+
+
+def update_grid(grid):
+    x = 221
+    y = 71
+    for i in range(len(grid) - 1):
+        counter = 0
+        y += BLOCK_SIZE
+        for j in range(len(grid[i])):
+            counter += 1
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * counter, y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
 
 
 def draw_grid():
-    grid = create_grid()
     x = 250
     y = 100
+
     for i in range(21):
-        pygame.draw.line(screen, (255, 255, 255), (250, y), (w_width - 250, y))
+        pygame.draw.line(screen, WHITE, (250, y), (w_width - 250, y))
         y += BLOCK_SIZE
     for j in range(11):
-        pygame.draw.line(screen, (255, 255, 255), (x, 100), (x, w_width - 100))
+        pygame.draw.line(screen, WHITE, (x, 100), (x, w_width - 100))
         x += BLOCK_SIZE
 
 
+def new_piece():
+    x = 221
+    y = 71
+    grid = create_grid()
+    piece_sel = ('O', 'L')
+    choice = random.choice(piece_sel)
+    if choice == 'O':
+        grid[0][4] = BLUE
+        grid[0][5] = BLUE
+        grid[1][4] = BLUE
+        grid[1][5] = BLUE
+    elif choice == 'L':
+        grid[0][4] = RED
+        grid[0][5] = RED
+        grid[0][6] = RED
+        grid[1][6] = RED
+    for i in range(len(grid)):
+        counter = 0
+        y += BLOCK_SIZE
+        for j in range(len(grid[i])):
+            counter += 1
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * counter, y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+    return grid
+
+
 def game():
+    fallen = {}
     # change screen color
     screen.fill(BLACK)
     # draw_grid()
+    grid = create_grid(fallen)
+    grid = new_piece()
     draw_grid()
     pygame.display.flip()
     # pygame.mixer.music.stop()
@@ -63,6 +107,7 @@ def game():
     pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
     while True:
+        update_grid(grid)
         hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
         pygame.display.update()
         for event in pygame.event.get():
