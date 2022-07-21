@@ -23,7 +23,7 @@ program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
 pygame.draw.rect(screen, GREEN, pygame.Rect(100, 100, BLOCK_SIZE, BLOCK_SIZE))
-
+COLORS = [BLUE, RED, GREEN]
 
 class Piece:
     def __init__(self, x, y, tetro):
@@ -47,11 +47,9 @@ def update_grid(grid):
     x = 221
     y = 71
     for i in range(len(grid) - 1):
-        counter = 0
         y += BLOCK_SIZE
         for j in range(len(grid[i])):
-            counter += 1
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * counter, y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
 
 
 def draw_grid():
@@ -72,22 +70,21 @@ def new_piece():
     grid = create_grid()
     piece_sel = ('O', 'L')
     choice = random.choice(piece_sel)
+    color = random.choice(COLORS)
     if choice == 'O':
-        grid[0][4] = BLUE
-        grid[0][5] = BLUE
-        grid[1][4] = BLUE
-        grid[1][5] = BLUE
+        grid[0][4] = color
+        grid[0][5] = color
+        grid[1][4] = color
+        grid[1][5] = color
     elif choice == 'L':
-        grid[0][4] = RED
-        grid[0][5] = RED
-        grid[0][6] = RED
-        grid[1][6] = RED
+        grid[0][4] = color
+        grid[0][5] = color
+        grid[0][6] = color
+        grid[1][6] = color
     for i in range(len(grid)):
-        counter = 0
         y += BLOCK_SIZE
         for j in range(len(grid[i])):
-            counter += 1
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * counter, y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
     return grid
 
 
