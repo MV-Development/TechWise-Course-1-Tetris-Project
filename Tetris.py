@@ -46,10 +46,14 @@ def create_grid(fallen={}):
 def update_grid(grid):
     x = 221
     y = 71
-    for i in range(len(grid) - 1):
+    grid[0][0] = RED
+    grid[0][9] = GREEN
+    grid[19][0] = BLUE
+    grid[19][9] = WHITE
+    for i in range(len(grid)):
         y += BLOCK_SIZE
         for j in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j+1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
 
 
 def draw_grid():
