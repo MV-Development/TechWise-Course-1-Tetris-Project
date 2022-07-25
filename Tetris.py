@@ -2,6 +2,7 @@ import pygame
 import random
 import sys
 import os
+from collections import deque
 
 import hud
 
@@ -22,7 +23,6 @@ pygame.display.set_caption('Tetris')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
-pygame.draw.rect(screen, GREEN, pygame.Rect(100, 100, BLOCK_SIZE, BLOCK_SIZE))
 COLORS = [BLUE, RED, GREEN]
 
 
@@ -39,28 +39,24 @@ class Piece:
         self.x += BLOCK_SIZE
 
 
-def create_grid(fallen=[]):
+def create_grid():
     # (rgb), x, y, l, w
     grid = [[BLACK for _ in range(10)] for _ in range(20)]
-    for a in range(len(grid)):
-        for b in range(len(grid[a])):
-            if (b, a) in fallen:
-                c = fallen[(b, a)]
-                grid[i][j] = c
     return grid
 
 
 def update_grid(grid):
     x = 221
     y = 71
-    #    grid[0][0] = RED
-    #    grid[0][9] = GREEN
-    #    grid[19][0] = BLUE
-    #    grid[19][9] = WHITE
+    # grid[0][0] = RED
+    # grid[0][9] = GREEN
+    # grid[19][0] = BLUE
+    # grid[19][9] = WHITE
     for i in range(len(grid)):
         y += BLOCK_SIZE
         for j in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE, BLOCK_SIZE))
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+    pygame.display.update()
 
 
 def draw_lines():
@@ -75,27 +71,23 @@ def draw_lines():
         x += BLOCK_SIZE
 
 
-def new_piece():
+def new_piece(color):
     x = 221
     y = 71
     grid = create_grid()
-    piece_sel = ('O', 'L')
+    piece_sel = ('L')
     choice = random.choice(piece_sel)
-    color = random.choice(COLORS)
-    if choice == 'O':
-        grid[0][4] = color
-        grid[0][5] = color
-        grid[1][4] = color
-        grid[1][5] = color
-    elif choice == 'L':
+
+    # if choice == 'O':
+    # grid[0][4] = color
+    # grid[0][5] = color
+    # grid[1][4] = color
+    # grid[1][5] = color
+    if choice == 'L':
         grid[0][4] = color
         grid[0][5] = color
         grid[0][6] = color
         grid[1][6] = color
-    for i in range(len(grid)):
-        y += BLOCK_SIZE
-        for j in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE, BLOCK_SIZE))
     return grid
 
 
@@ -104,28 +96,23 @@ def sort_blocks():
 
 
 def game():
-    fallen = []
     # change screen color
     screen.fill(BLACK)
     # draw_grid()
-
-    pygame.display.flip()
     # pygame.mixer.music.stop()
     # pygame.mixer.music.load('endlessmotion.wav')
     # pygame.mixer.music.play(-1)
     # new_piece()
+    draw_lines()
     pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
-    grid = create_grid(fallen)
-    piece_grid = new_piece()
-    update_grid(grid)
+    color = random.choice(COLORS)
+    grid = create_grid()
+    piece_grid = new_piece(color)
     update_grid(piece_grid)
-    pygame.display.update()
-    while True:
-        draw_lines()
-        hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
-        update_grid(piece_grid)
 
+    while True:
+        hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
         pygame.display.update()
         for event in pygame.event.get():
             # spacebar quits game
@@ -136,18 +123,23 @@ def game():
                 if event.key == pygame.K_RIGHT:
                     for i in range(len(grid)):
                         for j in range(len(grid[i]) - 1):
-                            if grid[i][j + 1] == BLACK and not piece_grid[i][j] == BLACK:
-                                piece_grid[i][j + 1] = piece_grid[i][j - 1]
+                            if piece_grid[i][j + 1] == BLACK and not piece_grid[i][j] == BLACK:
+                                piece_grid[i][j + 1] = piece_grid[i][j]
+                                piece_grid[i][j - 1] = BLACK
+                                break
+                if event.key == pygame.K_LEFT:
+                    for i in range(len(grid)):
+                        for j in range(len(grid[i])):
+                            if not j == 0 and piece_grid[i][j - 1] == BLACK and not piece_grid[i][j] == BLACK:
+                                piece_grid[i][j - 1] = piece_grid[i][j]
+                                piece_grid[i][j] = piece_grid[i][j + 1]
+                                break
 
-
-
-
+                update_grid(piece_grid)
 
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
-
-
 
 
 def main_menu():
