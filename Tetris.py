@@ -120,10 +120,10 @@ def game():
                     sys.exit(0)
                 if event.key == pygame.K_RIGHT:
                     for row in range(len(grid)):
-                        for col in range(len(grid[row]) - 1):
-                            if grid[row][col + 1] == BLACK and piece_grid[row][col] == color:
-                                piece_grid[row][col] = BLACK
+                        for col in range(len(grid[row]) - 2, 0, -1):
+                            if grid[row][col + 1] == BLACK:
                                 piece_grid[row][col + 1] = color
+                                piece_grid[row][col] = piece_grid[row][col - 1]
                                 break
                 if event.key == pygame.K_LEFT:
                     for row in range(len(grid)):
@@ -202,16 +202,21 @@ main_menu()
 #   determine game state
 
 
+# def drop_piece():
+#   while not piece.y_position + 1 == BLACK and piece.y_position < grid_height:
+#       piece.y_position += 1
+
+
 # def draw_board(game_pieces):
-#   if board_state == 0
-#       create_grid()
-#       break
-#   draw grid row by row
-#   treat existing blocks as individual squares
+#   set background to black
+#   draw squares by color
+#       empty squares are black
+#   draw falling block grid
+#       empty squares have no color
+#   draw gridlines
 
 
 # def collision_detection(piece_position):
-#   identify lowest parts of current game piece
 #   check color of adjacent block
 
 
