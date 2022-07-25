@@ -25,11 +25,18 @@ pygame.display.set_icon(program_icon)
 pygame.draw.rect(screen, GREEN, pygame.Rect(100, 100, BLOCK_SIZE, BLOCK_SIZE))
 COLORS = [BLUE, RED, GREEN]
 
+
 class Piece:
     def __init__(self, x, y, tetro):
         self.x = x
         self.y = y
         self.tetro = tetro
+
+    def move_piece_left(self):
+        self.x -= BLOCK_SIZE
+
+    def move_piece_right(self):
+        self.x += BLOCK_SIZE
 
 
 def create_grid(fallen={}):
@@ -46,14 +53,14 @@ def create_grid(fallen={}):
 def update_grid(grid):
     x = 221
     y = 71
-    grid[0][0] = RED
-    grid[0][9] = GREEN
-    grid[19][0] = BLUE
-    grid[19][9] = WHITE
+    #    grid[0][0] = RED
+    #    grid[0][9] = GREEN
+    #    grid[19][0] = BLUE
+    #    grid[19][9] = WHITE
     for i in range(len(grid)):
         y += BLOCK_SIZE
         for j in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j+1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
 
 
 def draw_grid():
@@ -92,6 +99,10 @@ def new_piece():
     return grid
 
 
+def sort_blocks():
+    print("blocks sorted")
+
+
 def game():
     fallen = {}
     # change screen color
@@ -117,6 +128,8 @@ def game():
                 if event.key == pygame.K_SPACE:
                     pygame.quit()
                     sys.exit(0)
+                if event.type == pygame.K_RIGHT:
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
