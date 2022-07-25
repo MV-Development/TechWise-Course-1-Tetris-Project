@@ -63,7 +63,7 @@ def update_grid(grid):
             pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE, BLOCK_SIZE))
 
 
-def draw_grid():
+def draw_lines():
     x = 250
     y = 100
 
@@ -95,7 +95,7 @@ def new_piece():
     for i in range(len(grid)):
         y += BLOCK_SIZE
         for j in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE, BLOCK_SIZE))
     return grid
 
 
@@ -124,6 +124,7 @@ def game():
         update_grid(grid)
         update_grid(piece_grid)
         hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
+        draw_lines()
         pygame.display.update()
         for event in pygame.event.get():
             # spacebar quits game
@@ -131,7 +132,12 @@ def game():
                 if event.key == pygame.K_SPACE:
                     pygame.quit()
                     sys.exit(0)
-                if event.type == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
+                    for i in range(len(grid)):
+                        for j in range(len(grid[i]) - 1):
+                            if grid[i][j + 1] == BLACK and not piece_grid[i][j] == BLACK:
+                                grid[i][j + 1] = piece_grid[i][j]
+                                grid[i][j] = BLACK
 
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -190,7 +196,7 @@ main_menu()
 
 # def game_loop(board_state, score):
 #   draw_board
-#   spawn piece
+#   spawn_piece
 #   while piece is moving
 #       check for collision
 #       take input
