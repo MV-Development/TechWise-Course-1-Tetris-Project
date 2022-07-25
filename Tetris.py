@@ -121,11 +121,10 @@ def game():
     while True:
 
 
-        update_grid(grid)
-        update_grid(piece_grid)
+
         hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
         draw_lines()
-        pygame.display.update()
+
         for event in pygame.event.get():
             # spacebar quits game
             if event.type == pygame.KEYDOWN:
@@ -137,11 +136,13 @@ def game():
                         for j in range(len(grid[i]) - 1):
                             if grid[i][j + 1] == BLACK and not piece_grid[i][j] == BLACK:
                                 grid[i][j + 1] = piece_grid[i][j]
-                                grid[i][j] = BLACK
-
+                                grid[i][j] = piece_grid[i][j - 1]
+                                update_grid(grid)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+        pygame.display.update()
+
 
 
 def main_menu():
