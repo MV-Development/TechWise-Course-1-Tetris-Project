@@ -2,8 +2,6 @@ import pygame
 import random
 import sys
 import os
-from collections import deque
-
 import hud
 
 pygame.init()
@@ -121,18 +119,18 @@ def game():
                     pygame.quit()
                     sys.exit(0)
                 if event.key == pygame.K_RIGHT:
-                    for i in range(len(grid)):
-                        for j in range(len(grid[i]) - 1):
-                            if piece_grid[i][j + 1] == BLACK and not piece_grid[i][j] == BLACK:
-                                piece_grid[i][j + 1] = piece_grid[i][j]
-                                piece_grid[i][j - 1] = BLACK
+                    for row in range(len(grid)):
+                        for col in range(len(grid[row]) - 1):
+                            if grid[row][col + 1] == BLACK and piece_grid[row][col] == color:
+                                piece_grid[row][col] = BLACK
+                                piece_grid[row][col + 1] = color
                                 break
                 if event.key == pygame.K_LEFT:
-                    for i in range(len(grid)):
-                        for j in range(len(grid[i])):
-                            if not j == 0 and piece_grid[i][j - 1] == BLACK and not piece_grid[i][j] == BLACK:
-                                piece_grid[i][j - 1] = piece_grid[i][j]
-                                piece_grid[i][j] = piece_grid[i][j + 1]
+                    for row in range(len(grid)):
+                        for col in range(len(grid[row])):
+                            if grid[row][col - 1] == BLACK and piece_grid[row][col] == color:
+                                piece_grid[row][col] = BLACK
+                                piece_grid[row][col - 1] = color
                                 break
 
                 update_grid(piece_grid)
