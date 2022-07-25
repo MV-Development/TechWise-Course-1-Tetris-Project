@@ -39,7 +39,7 @@ class Piece:
         self.x += BLOCK_SIZE
 
 
-def create_grid(fallen={}):
+def create_grid(fallen=[]):
     # (rgb), x, y, l, w
     grid = [[BLACK for _ in range(10)] for _ in range(20)]
     for a in range(len(grid)):
@@ -60,7 +60,7 @@ def update_grid(grid):
     for i in range(len(grid)):
         y += BLOCK_SIZE
         for j in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE, BLOCK_SIZE))
 
 
 def draw_grid():
@@ -104,13 +104,11 @@ def sort_blocks():
 
 
 def game():
-    fallen = {}
+    fallen = []
     # change screen color
     screen.fill(BLACK)
     # draw_grid()
-    grid = create_grid(fallen)
-    grid = new_piece()
-    draw_grid()
+
     pygame.display.flip()
     # pygame.mixer.music.stop()
     # pygame.mixer.music.load('endlessmotion.wav')
@@ -118,8 +116,13 @@ def game():
     # new_piece()
     pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
+    grid = create_grid(fallen)
+    piece_grid = new_piece()
     while True:
+
+
         update_grid(grid)
+        update_grid(piece_grid)
         hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
         pygame.display.update()
         for event in pygame.event.get():
