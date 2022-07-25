@@ -118,13 +118,15 @@ def game():
     start_time = pygame.time.get_ticks()
     grid = create_grid(fallen)
     piece_grid = new_piece()
+    update_grid(grid)
+    update_grid(piece_grid)
+    pygame.display.update()
     while True:
-
-
-
-        hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
         draw_lines()
+        hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
+        update_grid(piece_grid)
 
+        pygame.display.update()
         for event in pygame.event.get():
             # spacebar quits game
             if event.type == pygame.KEYDOWN:
@@ -135,13 +137,16 @@ def game():
                     for i in range(len(grid)):
                         for j in range(len(grid[i]) - 1):
                             if grid[i][j + 1] == BLACK and not piece_grid[i][j] == BLACK:
-                                grid[i][j + 1] = piece_grid[i][j]
-                                grid[i][j] = piece_grid[i][j - 1]
-                                update_grid(grid)
+                                piece_grid[i][j + 1] = piece_grid[i][j - 1]
+
+
+
+
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
-        pygame.display.update()
+
 
 
 
