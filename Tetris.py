@@ -128,12 +128,13 @@ def game():
                 if event.key == pygame.K_LEFT:
                     for row in range(len(grid)):
                         for col in range(len(grid[row])):
-                            if grid[row][col - 1] == BLACK and piece_grid[row][col] == color:
-                                piece_grid[row][col] = BLACK
+                            if grid[row][col - 1] == BLACK:
                                 piece_grid[row][col - 1] = color
+                                piece_grid[row][col] = piece_grid[row][col - 1]
                                 break
 
-                update_grid(piece_grid)
+            update_grid(piece_grid)
+
 
             if event.type == pygame.QUIT:
                 pygame.quit()
