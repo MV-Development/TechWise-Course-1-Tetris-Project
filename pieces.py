@@ -1,12 +1,13 @@
 pieceNames = ('I', 'O', 'L', 'Z', 'S', 'J', 'T')
 
 
-class tetromino:
-
-    def __init__(self, x, y, tetro):
+class Piece:
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.tetro = tetro
+        self.tetro = new_piece(random.choice(COLORS))
+
+
 
 # Orange Ricky
 #   0

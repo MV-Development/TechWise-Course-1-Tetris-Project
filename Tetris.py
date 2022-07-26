@@ -23,20 +23,6 @@ pygame.display.set_icon(program_icon)
 
 COLORS = [BLUE, RED, GREEN]
 
-
-class Piece:
-    def __init__(self, x, y, tetro):
-        self.x = x
-        self.y = y
-        self.tetro = tetro
-
-    def move_piece_left(self):
-        self.x -= BLOCK_SIZE
-
-    def move_piece_right(self):
-        self.x += BLOCK_SIZE
-
-
 def create_grid():
     # (rgb), x, y, l, w
     grid = [[BLACK for _ in range(10)] for _ in range(20)]
@@ -73,14 +59,14 @@ def new_piece(color):
     x = 221
     y = 71
     grid = create_grid()
-    piece_sel = ('L')
+    piece_sel = ('O', 'L')
     choice = random.choice(piece_sel)
 
-    # if choice == 'O':
-    # grid[0][4] = color
-    # grid[0][5] = color
-    # grid[1][4] = color
-    # grid[1][5] = color
+    if choice == 'O':
+        grid[0][4] = color
+        grid[0][5] = color
+        grid[1][4] = color
+        grid[1][5] = color
     if choice == 'L':
         grid[0][4] = color
         grid[0][5] = color
@@ -120,17 +106,15 @@ def game():
                     sys.exit(0)
                 if event.key == pygame.K_RIGHT:
                     for row in range(len(grid)):
-                        for col in range(len(grid[row]) - 2, 0, -1):
-                            if grid[row][col + 1] == BLACK:
-                                piece_grid[row][col + 1] = color
-                                piece_grid[row][col] = piece_grid[row][col - 1]
-                                break
+                        for col in range(len(grid[row])):
+                            if not shape_pos in fallen:
+
                 if event.key == pygame.K_LEFT:
                     for row in range(len(grid)):
-                        for col in range(len(grid[row])):
-                            if grid[row][col - 1] == BLACK:
+                        for col in range(len(grid[row]) - 1, 0, -1):
+                            if grid[row][col - 1] == BLACK and piece_grid[row][col] == color:
                                 piece_grid[row][col - 1] = color
-                                piece_grid[row][col] = piece_grid[row][col - 1]
+                                piece_grid[row][col] = piece_grid[row][col + 1]
                                 break
 
             update_grid(piece_grid)
