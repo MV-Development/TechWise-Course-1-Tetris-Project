@@ -23,20 +23,6 @@ pygame.display.set_icon(program_icon)
 
 COLORS = [BLUE, RED, GREEN]
 
-
-class Piece:
-    def __init__(self, x, y, tetro):
-        self.x = x
-        self.y = y
-        self.tetro = tetro
-
-    def move_piece_left(self):
-        self.x -= BLOCK_SIZE
-
-    def move_piece_right(self):
-        self.x += BLOCK_SIZE
-
-
 def create_grid():
     # (rgb), x, y, l, w
     grid = [[BLACK for _ in range(10)] for _ in range(20)]
@@ -73,14 +59,14 @@ def new_piece(color):
     x = 221
     y = 71
     grid = create_grid()
-    piece_sel = ('L')
+    piece_sel = ('O', 'L')
     choice = random.choice(piece_sel)
 
-    # if choice == 'O':
-    # grid[0][4] = color
-    # grid[0][5] = color
-    # grid[1][4] = color
-    # grid[1][5] = color
+    if choice == 'O':
+        grid[0][4] = color
+        grid[0][5] = color
+        grid[1][4] = color
+        grid[1][5] = color
     if choice == 'L':
         grid[0][4] = color
         grid[0][5] = color
@@ -200,20 +186,19 @@ def game5():
                     sys.exit(0)
                 if event.key == pygame.K_RIGHT:
                     for row in range(len(grid)):
-                        for col in range(len(grid[row]) - 1):
-                            if grid[row][col + 1] == BLACK and piece_grid[row][col] == color:
-                                piece_grid[row][col] = BLACK
-                                piece_grid[row][col + 1] = color
-                                break
+                        for col in range(len(grid[row])):
+                            if not shape_pos in fallen:
+
                 if event.key == pygame.K_LEFT:
                     for row in range(len(grid)):
-                        for col in range(len(grid[row])):
+                        for col in range(len(grid[row]) - 1, 0, -1):
                             if grid[row][col - 1] == BLACK and piece_grid[row][col] == color:
-                                piece_grid[row][col] = BLACK
                                 piece_grid[row][col - 1] = color
+                                piece_grid[row][col] = piece_grid[row][col + 1]
                                 break
 
-                update_grid(piece_grid)
+            update_grid(piece_grid)
+
 
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -333,16 +318,21 @@ main_menu()
 #   determine game state
 
 
+# def drop_piece():
+#   while not piece.y_position + 1 == BLACK and piece.y_position < grid_height:
+#       piece.y_position += 1
+
+
 # def draw_board(game_pieces):
-#   if board_state == 0
-#       create_grid()
-#       break
-#   draw grid row by row
-#   treat existing blocks as individual squares
+#   set background to black
+#   draw squares by color
+#       empty squares are black
+#   draw falling block grid
+#       empty squares have no color
+#   draw gridlines
 
 
 # def collision_detection(piece_position):
-#   identify lowest parts of current game piece
 #   check color of adjacent block
 
 
