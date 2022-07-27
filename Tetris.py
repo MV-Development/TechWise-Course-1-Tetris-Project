@@ -23,6 +23,7 @@ pygame.display.set_icon(program_icon)
 
 COLORS = [BLUE, RED, GREEN]
 
+
 def create_grid():
     # (rgb), x, y, l, w
     grid = [[BLACK for _ in range(10)] for _ in range(20)]
@@ -75,10 +76,6 @@ def new_piece(color):
     return grid
 
 
-def sort_blocks():
-    print("blocks sorted")
-
-
 def game():
     # change screen color
     screen.fill(BLACK)
@@ -118,7 +115,6 @@ def game():
                                 break
 
             update_grid(piece_grid)
-
 
             if event.type == pygame.QUIT:
                 pygame.quit()
