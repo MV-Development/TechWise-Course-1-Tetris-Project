@@ -32,7 +32,7 @@ def limit5(screen, start_time):
     sec_str = str((passed_time%60000)//1000).zfill(2)
     mill_str = str(passed_time%1000).zfill(3)
     score_str = ('{min}:{sec}:{mil}'.format(min = min_str, sec = sec_str, mil = mill_str))
-    if sec_str >= "02":
+    if min_str >= "05":
         score_str = "ASSY"
     text = font.render(str(score_str), True, font_color)
     screen.fill((0,0,0), (0, 0, 800, 100))
