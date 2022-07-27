@@ -173,7 +173,7 @@ def game():
 
 def game_over():
     screen.fill(BLACK)
-    font = pygame.font.SysFont('Arial', 60)
+    font = pygame.font.SysFont('franklingothicmedium', 60)
     game_over_space = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 250, 160, 100))
     game_over_text = font.render('GAME OVER', False, WHITE)
     game_over_rect = game_over_text.get_rect(center=game_over_space.center)
@@ -235,14 +235,20 @@ def game_over():
 
 def main_menu():
     # main menu
+    tetris_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 130, 160, 100))
+
     # start game button
-    start_button = pygame.draw.rect(screen, BLUE, pygame.Rect(320, 350, 160, 100))
+    start_button = pygame.draw.rect(screen, (118,238,198), pygame.Rect(320, 350, 160, 100))
 
     # quit game button
     quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
     # text on buttons
-    font = pygame.font.SysFont('Arial', 50)
+    tetris_font = pygame.font.SysFont('javanesetext', 100)
+    tetris_text = tetris_font.render('TETRIS', False, WHITE)
+    tetris_rect = tetris_text.get_rect(center=tetris_button.center)
+    screen.blit(tetris_text, tetris_rect)
+    font = pygame.font.SysFont('franklingothicmedium', 50)
     start_text = font.render('Start', False, BLACK)
     start_rect = start_text.get_rect(center=start_button.center)
     screen.blit(start_text, start_rect)
@@ -280,16 +286,16 @@ def game_select():
     # main menu
     # start game button
 
-    limit5_button = pygame.draw.rect(screen, GREEN, pygame.Rect(320, 250, 160, 100))
-    limit10_button = pygame.draw.rect(screen, BLUE, pygame.Rect(320, 350, 160, 100))
-    limit15_button = pygame.draw.rect(screen, GREEN, pygame.Rect(320, 450, 160, 100))
+    limit5_button = pygame.draw.rect(screen, (141,238,238), pygame.Rect(320, 250, 160, 100))
+    limit10_button = pygame.draw.rect(screen, (30,144,255), pygame.Rect(320, 350, 160, 100))
+    limit15_button = pygame.draw.rect(screen, (141,238,238), pygame.Rect(320, 450, 160, 100))
 
     # quit game button
     quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
     # text on buttons
-    font = pygame.font.SysFont('Arial', 30)
-    font_title = pygame.font.SysFont('Arial', 60)
+    font = pygame.font.SysFont('franklingothicmedium', 28)
+    font_title = pygame.font.SysFont('franklingothicmedium', 60)
 
     limit5_text = font.render('5 Min Limit', False, BLACK)
     limit10_text = font.render('10 Min Limit', False, BLACK)
