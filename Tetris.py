@@ -32,7 +32,7 @@ PIECE_NAMES = pieces.PIECE_NAMES
 
 ##########################################################################################
 # Grid Management
-def draw_lines(): # Uses pygame.draw.line function to draw the gridlines on the screen
+def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the screen
     x = 250
     y = 100
 
@@ -194,5 +194,5 @@ def main_menu():
 
 
 ##########################################################################################
-# Begin Game
+# Begin Game, Good Luck :)
 main_menu()
