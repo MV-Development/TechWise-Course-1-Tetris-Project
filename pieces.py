@@ -1,11 +1,7 @@
 import random
-O = [['xxxxx'
-      'xxxxx'
-      'xooxx'
-      'xooxx'
-      'xxxxx']]
-
-PIECE_NAMES = (O)
+Hero = [['oooo']]
+SmashBoy = [['oo']]
+PIECE_NAMES = (Hero, SmashBoy)
 WHITE, BLACK, BLUE, RED, GREEN = (255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0), (0, 255, 0)
 COLORS = [BLUE, RED, GREEN]
 

@@ -86,7 +86,7 @@ def draw_shape(piece):
 
 
 def new_piece():
-    return pieces.Piece(3, 0, random.choice(PIECE_NAMES))
+    return pieces.Piece(6, 4, random.choice(PIECE_NAMES))
 
 
 def empty_space(tetro, grid):
@@ -110,7 +110,7 @@ def game():
     # pygame.mixer.music.play(-1)
     # new_piece()
     draw_lines()
-    pygame.mouse.set_visible(False)
+    # pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
     fallen = {}
     grid = create_grid(fallen)
@@ -126,7 +126,7 @@ def game():
         active_time += clock.get_rawtime()
         hud.create_hud(screen, start_time)  # ATTEMPT AT GAME CLOCK
         grid = create_grid(fallen)
-        if active_time/1000 > active_fall_speed:
+        if active_time / 1000 > active_fall_speed:
             active_time = 0
             active_piece.y += 1
             if not (empty_space(active_piece, grid)) and active_piece.y > 0:
@@ -137,17 +137,21 @@ def game():
             # space bar quits game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    print("Space Bar Pressed")
                     pygame.quit()
                     sys.exit(0)
                 if event.key == pygame.K_RIGHT:
+                    print("Right arrow pressed")
                     active_piece.x += 1
                     if not (empty_space(active_piece, grid)):
                         active_piece.x -= 1
                 if event.key == pygame.K_LEFT:
+                    print("Left arrow pressed")
                     active_piece.x -= 1
                     if not (empty_space(active_piece, grid)):
                         active_piece.x += 1
                 if event.key == pygame.K_UP:
+                    print("Up arrow pressed")
                     active_piece.rotation += 1
                     if not (empty_space(active_piece, grid)):
                         active_piece.rotation -= 1
