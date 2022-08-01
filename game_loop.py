@@ -58,11 +58,12 @@ def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the
     x = 250
     y = 100
 
-    pygame.draw.line(screen, WHITE, (250, y), (w_width - 250, y))
-    pygame.draw.line(screen, WHITE, (250, 700), (w_width - 250, 700))
-
-    pygame.draw.line(screen, WHITE, (x, 100), (x, w_width - 100))
-    pygame.draw.line(screen, WHITE, (550, 100), (550, w_width - 100))
+    for _ in range(21):
+        pygame.draw.line(screen, WHITE, (250, y), (w_width - 250, y))
+        y += BLOCK_SIZE
+    for _ in range(11):
+        pygame.draw.line(screen, WHITE, (x, 100), (x, w_width - 100))
+        x += BLOCK_SIZE
 
 
 def update_grid(grid):
