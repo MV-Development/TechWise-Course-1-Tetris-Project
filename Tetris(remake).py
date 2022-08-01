@@ -6,15 +6,15 @@ import hud
 
 WHITE, BLACK, BLUE, RED, GREEN = (255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0), (0, 255, 0)
 BLOCK_SIZE = 30
-NEW_X = 371
-NEW_Y = 101
+NEW_X = 370
+NEW_Y = 100
 
 # window variables
 w_width = 800
 w_height = 800
 
 # grid sides
-GRID_LEFT = 251
+GRID_LEFT = 250
 GRID_TOP = 100
 GRID_BOTTOM = 700
 GRID_RIGHT = 550
@@ -64,12 +64,18 @@ class Piece(pygame.sprite.Sprite):
     # if block left is greater than the left side, move left
     def move_left(self):
         if self.rect[0] > GRID_LEFT:
-            self.rect[0] -= BLOCK_SIZE
+            if self.rect[0] - GRID_LEFT < BLOCK_SIZE:
+                self.rect[0] = GRID_LEFT
+            else:
+                self.rect[0] -= BLOCK_SIZE
 
     # if block right is less than right side, move right
     def move_right(self):
         if self.rect[0] + self.rect[2] < GRID_RIGHT:
-            self.rect[0] += BLOCK_SIZE
+            if GRID_RIGHT - self.rect[2] < BLOCK_SIZE:
+                self.rect[0] = GRID_RIGHT - (self.rect[2] - self.rect[0])
+            else:
+                self.rect[0] += BLOCK_SIZE
 
     def move_down(self):
 
@@ -132,9 +138,10 @@ def game():
             # spacebar quits game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    if  not fall_speed == 0:
+                    if not fall_speed == 0:
                         fall_speed = 0
-                    else: fall_speed = 1
+                    else:
+                        fall_speed = 1
                 if event.key == pygame.K_SPACE:
                     pygame.quit()
                     sys.exit(0)
