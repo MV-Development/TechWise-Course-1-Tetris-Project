@@ -46,7 +46,7 @@ class BlueRicky:
 # 00
 #  00
 class CleavelandZ:
-    def __init__(self, x, y):
+    def __init__(self, x, y, blocks):
         self.x = x
         self.y = y
         blocks = ((x, y), (x + 1, y), (x + 1, y + 1), (x + 2, y + 1))

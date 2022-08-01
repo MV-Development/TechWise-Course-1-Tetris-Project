@@ -1,3 +1,5 @@
+##########################################################################################
+# Import statements
 import pygame
 import random
 import sys
@@ -5,10 +7,15 @@ import os
 import hud
 import pieces
 
+##########################################################################################
+# Initialization
 pygame.init()
 pygame.font.init()
 
+##########################################################################################
+# Global Variables
 WHITE, BLACK, BLUE, RED, GREEN = (255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0), (0, 255, 0)
+COLORS = [BLUE, RED, GREEN]
 BLOCK_SIZE = 30
 
 # window variables
@@ -24,6 +31,8 @@ pygame.display.set_icon(program_icon)
 PIECE_NAMES = pieces.PIECE_NAMES
 
 
+##########################################################################################
+# Grid Management
 def draw_lines():
     x = 250
     y = 100
@@ -63,6 +72,8 @@ def create_grid(fallen={}):
     return grid
 
 
+##########################################################################################
+# Initializing falling block
 def draw_shape(piece):
     pos = []
     shape = piece.tetro[piece.rotation % len(piece.tetro)]
@@ -79,10 +90,6 @@ def new_piece():
     return pieces.Piece(3, 0, random.choice(PIECE_NAMES))
 
 
-def sort_blocks():
-    print("blocks sorted")
-
-
 def empty_space(tetro, grid):
     valid_grid = [[(col, row) for col in range(10) if grid[row][col] == BLACK] for row in range(20)]
     valid_grid = [pos for sublist in valid_grid for pos in sublist]
@@ -94,10 +101,11 @@ def empty_space(tetro, grid):
     return True
 
 
+##########################################################################################
+# Main Game loop
 def game():
     # change screen color
     screen.fill(BLACK)
-    # draw_grid()
     # pygame.mixer.music.stop()
     # pygame.mixer.music.load('endlessmotion.wav')
     # pygame.mixer.music.play(-1)
@@ -140,6 +148,8 @@ def game():
                 sys.exit(0)
 
 
+##########################################################################################
+# Main Menu Function
 def main_menu():
     # main menu
     # start game button
