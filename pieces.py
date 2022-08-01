@@ -1,20 +1,25 @@
+import random
 O = [['xxxxx'
       'xxxxx'
       'xooxx'
       'xooxx'
       'xxxxx']]
 
-piece_names = (O)
+PIECE_NAMES = (O)
+WHITE, BLACK, BLUE, RED, GREEN = (255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0), (0, 255, 0)
+COLORS = [BLUE, RED, GREEN]
 
 # test
 
-#class piece
-#   def __init__(self, x, y, tetro):
-#      self.x = x
-#       self.y = y
-#       self.tetro = tetro
-#       self.color = random.choice(COLORS)
-#       self.rotation = 0
+class Piece():
+    def __init__(self, x, y, tetro):
+
+        self.x = x
+        self.y = y
+
+        self.tetro = tetro
+        self.color = random.choice(COLORS)
+        self.rotation = 0
 
 
 # Orange Ricky
@@ -25,6 +30,7 @@ class OrangeRicky:
         self.x = x
         self.y = y
         blocks = ((x + 2, y), (x, y + 1), (x + 1, y + 1), (x + 2, y + 1))
+
 
 # Blue Ricky
 # 0

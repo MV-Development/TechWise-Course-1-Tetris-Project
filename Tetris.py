@@ -3,7 +3,7 @@ import random
 import sys
 import os
 import hud
-
+import pieces
 pygame.init()
 pygame.font.init()
 
@@ -20,8 +20,7 @@ pygame.mouse.set_visible(True)
 pygame.display.set_caption('Tetris')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
-
-COLORS = [BLUE, RED, GREEN]
+PIECE_NAMES = pieces.PIECE_NAMES
 
 def draw_lines():
     x = 250
@@ -43,14 +42,14 @@ def update_grid(grid):
     # grid[19][9] = WHITE
     for row in range(len(grid)):
         y += BLOCK_SIZE
-        for col in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[row][col], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+        for col in range(len(grid[row])):
+            pygame.draw.rect(screen, grid[row][col], (x + (BLOCK_SIZE) * (col + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
     pygame.display.update()
 
 def create_grid(fallen = {}):
     # (rgb), x, y, l, w
     grid = [[BLACK for _ in range(10)] for _ in range(20)]
-
+    # for every row and column, check if it's in fallen dict; if so, add rgb value of fallen block to main grid
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             if (col, row) in fallen:
@@ -59,9 +58,19 @@ def create_grid(fallen = {}):
 
     return grid
 
+def draw_shape(piece):
+    pos = []
+    shape = piece.tetro[piece.rotation % len(piece.tetro)]
+    for y, row in enumerate(shape):
+        row = list(row)
+        for x, col in enumerate(row):
+            if col == 'o':
+                pos.append((piece.x + x, piece.y + y))
+    for n, loc in enumerate(pos):
+        pos[n] = (loc[0] - 2, loc[1] - 4)
 
 def new_piece():
-    return Piece(3, 0, random.choice(piece_names))
+    return pieces.Piece(3, 0, random.choice(PIECE_NAMES))
 
 
 def sort_blocks():
@@ -79,12 +88,11 @@ def game():
     draw_lines()
     pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
-    color = random.choice(COLORS)
     fallen = {}
     grid = create_grid(fallen)
     active_piece = new_piece()
     next_piece = new_piece()
-    update_grid(piece_grid)
+    update_grid(grid)
 
     while True:
         hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
@@ -96,19 +104,18 @@ def game():
                     pygame.quit()
                     sys.exit(0)
                 if event.key == pygame.K_RIGHT:
-                    for row in range(len(grid)):
-                        for col in range(len(grid[row])):
-                            if not shape_pos in fallen:
-
+                    active_piece.x += 1
+                    if not (empty_space(active_piece, grid)):
+                        curent_piece.x -= 1
                 if event.key == pygame.K_LEFT:
-                    for row in range(len(grid)):
-                        for col in range(len(grid[row]) - 1, 0, -1):
-                            if grid[row][col - 1] == BLACK and piece_grid[row][col] == color:
-                                piece_grid[row][col - 1] = color
-                                piece_grid[row][col] = piece_grid[row][col + 1]
-                                break
-
-            update_grid(piece_grid)
+                    active_piece.x -= 1
+                    if not (empty_space(active_piece, grid)):
+                        current_piece.x += 1
+                if event.key == pygame.K_UP:
+                    active_piece.rotation += 1
+                    if not (empty_space(active_piece, grid)):
+                        active_piece.rotation -= 1
+            update_grid(grid)
 
 
             if event.type == pygame.QUIT:
