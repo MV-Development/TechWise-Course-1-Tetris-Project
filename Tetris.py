@@ -4,6 +4,7 @@ import sys
 import os
 import hud
 import pieces
+
 pygame.init()
 pygame.font.init()
 
@@ -22,6 +23,7 @@ program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 PIECE_NAMES = pieces.PIECE_NAMES
 
+
 def draw_lines():
     x = 250
     y = 100
@@ -32,6 +34,7 @@ def draw_lines():
     for j in range(11):
         pygame.draw.line(screen, WHITE, (x, 100), (x, w_width - 100))
         x += BLOCK_SIZE
+
 
 def update_grid(grid):
     x = 221
@@ -46,7 +49,8 @@ def update_grid(grid):
             pygame.draw.rect(screen, grid[row][col], (x + (BLOCK_SIZE) * (col + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
     pygame.display.update()
 
-def create_grid(fallen = {}):
+
+def create_grid(fallen={}):
     # (rgb), x, y, l, w
     grid = [[BLACK for _ in range(10)] for _ in range(20)]
     # for every row and column, check if it's in fallen dict; if so, add rgb value of fallen block to main grid
@@ -57,6 +61,7 @@ def create_grid(fallen = {}):
                 grid[row][col] = f
 
     return grid
+
 
 def draw_shape(piece):
     pos = []
@@ -69,12 +74,24 @@ def draw_shape(piece):
     for n, loc in enumerate(pos):
         pos[n] = (loc[0] - 2, loc[1] - 4)
 
+
 def new_piece():
     return pieces.Piece(3, 0, random.choice(PIECE_NAMES))
 
 
 def sort_blocks():
     print("blocks sorted")
+
+
+def empty_space(tetro, grid):
+    valid_grid = [[(col, row) for col in range(10) if grid[row][col] == BLACK] for row in range(20)]
+    valid_grid = [pos for sublist in valid_grid for pos in sublist]
+    new_grid = draw_shape(tetro)
+    for pos in new_grid:
+        if pos not in valid_grid:
+            if pos[1] > -1:
+                return False
+    return True
 
 
 def game():
@@ -96,6 +113,7 @@ def game():
 
     while True:
         hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
+        grid = create_grid(fallen)
         pygame.display.update()
         for event in pygame.event.get():
             # spacebar quits game
@@ -116,7 +134,6 @@ def game():
                     if not (empty_space(active_piece, grid)):
                         active_piece.rotation -= 1
             update_grid(grid)
-
 
             if event.type == pygame.QUIT:
                 pygame.quit()
