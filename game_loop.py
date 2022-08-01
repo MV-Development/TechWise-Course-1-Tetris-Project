@@ -3,6 +3,7 @@ import random
 import sys
 import hud
 import pieces
+import main_menu
 
 ##########################################################################################
 # Global Variables
@@ -230,7 +231,7 @@ def game_over(score):
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
                 if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    game_select()
+                    main_menu.game_select()
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
                     pygame.quit()
                     sys.exit(0)
