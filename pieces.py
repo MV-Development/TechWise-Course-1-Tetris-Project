@@ -1,12 +1,19 @@
-pieceNames = ('I', 'O', 'L', 'Z', 'S', 'J', 'T')
+O = [['xxxxx'
+      'xxxxx'
+      'xooxx'
+      'xooxx'
+      'xxxxx']]
+
+piece_names = (O)
 
 
 class Piece:
-    def __init__(self, x, y):
+    def __init__(self, x, y, tetro):
         self.x = x
         self.y = y
-        self.tetro = new_piece(random.choice(COLORS))
-
+        self.tetro = tetro
+        self.color = random.choice(COLORS)
+        self.rotation = 0
 
 
 # Orange Ricky
