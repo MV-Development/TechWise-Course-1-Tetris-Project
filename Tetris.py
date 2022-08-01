@@ -175,7 +175,8 @@ def main_menu():
     # pygame.mixer.init()
     # pygame.mixer.music.load('birthofahero.wav')
     # pygame.mixer.music.play(-1)
-
+    #######################################################################################
+    # Take user input
     while True:
         for event in pygame.event.get():
             # on event click
@@ -192,43 +193,6 @@ def main_menu():
                 sys.exit(0)
 
 
+##########################################################################################
+# Begin Game
 main_menu()
-
-# 4x4 grid
-# 0   1    2    3
-# 4   5    6    7
-# 8   9    10   11
-# 12  13   14   15
-
-# def game_loop(board_state, score):
-#   draw_board
-#   spawn_piece
-#   while piece is moving
-#       check for collision
-#       take input
-#       drop piece
-#   stop piece, check for full row
-#   determine game state
-
-
-# def drop_piece():
-#   while not piece.y_position + 1 == BLACK and piece.y_position < grid_height:
-#       piece.y_position += 1
-
-
-# def draw_board(game_pieces):
-#   set background to black
-#   draw squares by color
-#       empty squares are black
-#   draw falling block grid
-#       empty squares have no color
-#   draw gridlines
-
-
-# def collision_detection(piece_position):
-#   check color of adjacent block
-
-
-# def rotate(piece_orientation):
-#   on event up key down rotate
-#   change surrounding colors
