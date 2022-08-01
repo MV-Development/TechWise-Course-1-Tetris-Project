@@ -29,11 +29,14 @@ pygame.display.set_icon(program_icon)
 COLORS = [BLUE, RED, GREEN]
 TETROS = ['O.png', 'L.png']
 
+
 def fallen(tetro):
     return tetro_bottom(tetro) >= GRID_BOTTOM
 
+
 def tetro_bottom(tetro):
     return tetro.rect[1] + tetro.rect[3]
+
 
 def new_piece():
     choice = random.choice(TETROS)
@@ -89,7 +92,6 @@ class Piece(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
 
-
 def draw_lines():
     x = 250
     y = 100
@@ -129,6 +131,10 @@ def game():
         for event in pygame.event.get():
             # spacebar quits game
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    if  not fall_speed == 0:
+                        fall_speed = 0
+                    else: fall_speed = 1
                 if event.key == pygame.K_SPACE:
                     pygame.quit()
                     sys.exit(0)
@@ -148,7 +154,7 @@ def game():
                 pygame.quit()
                 sys.exit(0)
 
-        screen.fill(BLACK, rect=(251,101,551,701))
+        screen.fill(BLACK, rect=(251, 101, 551, 701))
         draw_lines()
         active_group.sprite.fall(fall_speed)
 
@@ -159,12 +165,11 @@ def game():
         if active_group.sprite.rect.midright[0] > GRID_RIGHT:
             active_group.sprite.resetx(GRID_RIGHT - active_group.sprite.rect.midright[0])
 
-
-        if pygame.sprite.spritecollideany(active_group.sprite, fallen_tetros, pygame.sprite.collide_mask) or fallen(active_group.sprite):
+        if pygame.sprite.spritecollideany(active_group.sprite, fallen_tetros, pygame.sprite.collide_mask) or fallen(
+                active_group.sprite):
             fallen_tetros.add(active_group.sprite)
             active_group.remove(active_group.sprite)
             active_group.add(Piece())
-
 
         active_group.draw(screen)
         fallen_tetros.draw(screen)
@@ -238,7 +243,7 @@ def main_menu():
     tetris_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 130, 160, 100))
 
     # start game button
-    start_button = pygame.draw.rect(screen, (118,238,198), pygame.Rect(320, 350, 160, 100))
+    start_button = pygame.draw.rect(screen, (118, 238, 198), pygame.Rect(320, 350, 160, 100))
 
     # quit game button
     quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
@@ -286,9 +291,9 @@ def game_select():
     # main menu
     # start game button
 
-    limit5_button = pygame.draw.rect(screen, (141,238,238), pygame.Rect(320, 250, 160, 100))
-    limit10_button = pygame.draw.rect(screen, (30,144,255), pygame.Rect(320, 350, 160, 100))
-    limit15_button = pygame.draw.rect(screen, (141,238,238), pygame.Rect(320, 450, 160, 100))
+    limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
+    limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
+    limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
 
     # quit game button
     quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
