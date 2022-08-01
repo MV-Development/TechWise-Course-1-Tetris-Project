@@ -23,26 +23,6 @@ pygame.display.set_icon(program_icon)
 
 COLORS = [BLUE, RED, GREEN]
 
-def create_grid():
-    # (rgb), x, y, l, w
-    grid = [[BLACK for _ in range(10)] for _ in range(20)]
-    return grid
-
-
-def update_grid(grid):
-    x = 221
-    y = 71
-    # grid[0][0] = RED
-    # grid[0][9] = GREEN
-    # grid[19][0] = BLUE
-    # grid[19][9] = WHITE
-    for i in range(len(grid)):
-        y += BLOCK_SIZE
-        for j in range(len(grid[i])):
-            pygame.draw.rect(screen, grid[i][j], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
-    pygame.display.update()
-
-
 def draw_lines():
     x = 250
     y = 100
@@ -54,25 +34,34 @@ def draw_lines():
         pygame.draw.line(screen, WHITE, (x, 100), (x, w_width - 100))
         x += BLOCK_SIZE
 
-
-def new_piece(color):
+def update_grid(grid):
     x = 221
     y = 71
-    grid = create_grid()
-    piece_sel = ('O', 'L')
-    choice = random.choice(piece_sel)
+    # grid[0][0] = RED
+    # grid[0][9] = GREEN
+    # grid[19][0] = BLUE
+    # grid[19][9] = WHITE
+    for row in range(len(grid)):
+        y += BLOCK_SIZE
+        for col in range(len(grid[i])):
+            pygame.draw.rect(screen, grid[row][col], (x + (BLOCK_SIZE) * (j + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+    pygame.display.update()
 
-    if choice == 'O':
-        grid[0][4] = color
-        grid[0][5] = color
-        grid[1][4] = color
-        grid[1][5] = color
-    if choice == 'L':
-        grid[0][4] = color
-        grid[0][5] = color
-        grid[0][6] = color
-        grid[1][6] = color
+def create_grid(fallen = {}):
+    # (rgb), x, y, l, w
+    grid = [[BLACK for _ in range(10)] for _ in range(20)]
+
+    for row in range(len(grid)):
+        for col in range(len(grid[row])):
+            if (col, row) in fallen:
+                f = fallen[(col, row)]
+                grid[row][col] = f
+
     return grid
+
+
+def new_piece():
+    return Piece(3, 0, random.choice(piece_names))
 
 
 def sort_blocks():
@@ -91,8 +80,10 @@ def game():
     pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
     color = random.choice(COLORS)
-    grid = create_grid()
-    piece_grid = new_piece(color)
+    fallen = {}
+    grid = create_grid(fallen)
+    active_piece = new_piece()
+    next_piece = new_piece()
     update_grid(piece_grid)
 
     while True:
