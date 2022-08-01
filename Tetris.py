@@ -116,16 +116,22 @@ def game():
     grid = create_grid(fallen)
     active_piece = new_piece()
     next_piece = new_piece()
-    change_piece = True
+    change_piece = False
     update_grid(grid)
     clock = pygame.time.Clock()
-    fall_time = 0
-    fall_speed = 0.2
+    active_time = 0
+    active_fall_speed = 0.5
     while True:
+        clock.tick(30)
+        active_time += clock.get_rawtime()
         hud.create_hud(screen, start_time)  # ATTEMPT AT GAME CLOCK
         grid = create_grid(fallen)
-        fall_time += clock.get_rawtime()
-        clock.tick()
+        if active_time/1000 > active_fall_speed:
+            active_time = 0
+            active_piece.y += 1
+            if not (empty_space(active_piece, grid)) and active_piece.y > 0:
+                active_piece.y -= 1
+                change_piece = True
         pygame.display.update()
         for event in pygame.event.get():
             # space bar quits game
