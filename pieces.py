@@ -6,6 +6,7 @@ O = [['xxxxx'
 
 piece_names = (O)
 
+# test
 
 #class piece
 #   def __init__(self, x, y, tetro):
