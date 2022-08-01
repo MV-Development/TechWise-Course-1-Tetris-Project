@@ -29,14 +29,11 @@ pygame.display.set_icon(program_icon)
 COLORS = [BLUE, RED, GREEN]
 TETROS = ['O.png', 'L.png']
 
-
 def fallen(tetro):
     return tetro_bottom(tetro) >= GRID_BOTTOM
 
-
 def tetro_bottom(tetro):
     return tetro.rect[1] + tetro.rect[3]
-
 
 def new_piece():
     choice = random.choice(TETROS)
