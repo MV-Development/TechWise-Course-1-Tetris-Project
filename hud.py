@@ -1,6 +1,5 @@
 import pygame.time
 
-
 # CREATING HUD TO DISPLAY TIME AND SCORE
 
 def create_hud(screen, start_time):
@@ -40,7 +39,7 @@ def limit5(screen, start_time):
     game_clock.tick(25)
     game_mode_display = font.render("5 Minute Time Limit", False, font_color)
     screen.blit(game_mode_display,(250,50))
-    score_display = font.render("CURRENT SCORE: ", True, font_color)  # ADD SCORE FUNCTION
+    score_display = font.render(f"CURRENT SCORE: ", True, font_color)  # ADD SCORE FUNCTION
     screen.blit(score_display, (500, 50))
     return score_str
 
