@@ -3,7 +3,6 @@
 import pygame
 import random
 import sys
-import os
 import hud
 import pieces
 
@@ -33,7 +32,7 @@ PIECE_NAMES = pieces.PIECE_NAMES
 
 ##########################################################################################
 # Grid Management
-def draw_lines():
+def draw_lines(): # Uses pygame.draw.line function to draw the gridlines on the screen
     x = 250
     y = 100
 
@@ -74,6 +73,7 @@ def create_grid(fallen={}):
 
 ##########################################################################################
 # Initializing falling block
+# Takes falling block object,
 def draw_shape(piece):
     pos = []
     shape = piece.tetro[piece.rotation % len(piece.tetro)]
@@ -124,7 +124,7 @@ def game():
         grid = create_grid(fallen)
         pygame.display.update()
         for event in pygame.event.get():
-            # spacebar quits game
+            # space bar quits game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pygame.quit()
