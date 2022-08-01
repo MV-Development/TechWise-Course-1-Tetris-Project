@@ -47,10 +47,6 @@ def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the
 def update_grid(grid):
     x = 221
     y = 71
-    # grid[0][0] = RED
-    # grid[0][9] = GREEN
-    # grid[19][0] = BLUE
-    # grid[19][9] = WHITE
     for row in range(len(grid)):
         y += BLOCK_SIZE
         for col in range(len(grid[row])):
@@ -77,6 +73,7 @@ def create_grid(fallen={}):
 def draw_shape(piece):
     pos = []
     shape = piece.tetro[piece.rotation % len(piece.tetro)]
+
     for y, row in enumerate(shape):
         row = list(row)
         for x, col in enumerate(row):
@@ -84,6 +81,8 @@ def draw_shape(piece):
                 pos.append((piece.x + x, piece.y + y))
     for n, loc in enumerate(pos):
         pos[n] = (loc[0] - 2, loc[1] - 4)
+
+    return pos
 
 
 def new_piece():
@@ -117,11 +116,16 @@ def game():
     grid = create_grid(fallen)
     active_piece = new_piece()
     next_piece = new_piece()
+    change_piece = True
     update_grid(grid)
-
+    clock = pygame.time.Clock()
+    fall_time = 0
+    fall_speed = 0.2
     while True:
         hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
         grid = create_grid(fallen)
+        fall_time += clock.get_rawtime()
+        clock.tick()
         pygame.display.update()
         for event in pygame.event.get():
             # space bar quits game
@@ -132,20 +136,33 @@ def game():
                 if event.key == pygame.K_RIGHT:
                     active_piece.x += 1
                     if not (empty_space(active_piece, grid)):
-                        curent_piece.x -= 1
+                        active_piece.x -= 1
                 if event.key == pygame.K_LEFT:
                     active_piece.x -= 1
                     if not (empty_space(active_piece, grid)):
-                        current_piece.x += 1
+                        active_piece.x += 1
                 if event.key == pygame.K_UP:
                     active_piece.rotation += 1
                     if not (empty_space(active_piece, grid)):
                         active_piece.rotation -= 1
-            update_grid(grid)
 
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+
+        tetro_pos = draw_shape(active_piece)
+        for n in range(len(tetro_pos)):
+            x, y = tetro_pos[n]
+            if y > -1:
+                grid[y][x] = active_piece.color
+        if change_piece:
+            for pos in tetro_pos:
+                n = (pos[0], pos[1])
+                fallen[n] = active_piece.color
+            active_piece = next_piece
+            next_piece = new_piece()
+            change_piece = False
+        update_grid(grid)
 
 
 ##########################################################################################
