@@ -50,7 +50,7 @@ def update_grid(grid):
     for row in range(len(grid)):
         y += BLOCK_SIZE
         for col in range(len(grid[row])):
-            pygame.draw.rect(screen, grid[row][col], (x + (BLOCK_SIZE) * (col + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(screen, grid[row][col], (x + BLOCK_SIZE * (col + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
     pygame.display.update()
 
 
@@ -122,7 +122,7 @@ def game():
     fall_time = 0
     fall_speed = 0.2
     while True:
-        hud.create_hud(screen, start_time)  ###ATTEMPT AT GAME CLOCK
+        hud.create_hud(screen, start_time)  # ATTEMPT AT GAME CLOCK
         grid = create_grid(fallen)
         fall_time += clock.get_rawtime()
         clock.tick()
