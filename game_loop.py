@@ -40,7 +40,7 @@ def draw_next_piece(piece):
         row = list(row)
         for x, col in enumerate(row):
             if col == 'o':
-                pygame.draw.rect(screen, piece.color, (600 + x * BLOCK_SIZE, 250 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
+                pygame.draw.rect(screen, piece.color, (600 + x * BLOCK_SIZE, 260 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
 
 def display_score(score):
     font = pygame.font.Font(None, 30)
