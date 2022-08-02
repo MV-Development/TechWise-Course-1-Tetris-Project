@@ -90,33 +90,4 @@ def empty_space(tetro, grid):
     return True
 
 
-# def game5():
-#     # change screen color
-#     screen.fill(BLACK)
-#     # draw_grid()
-#     # pygame.mixer.music.stop()
-#     # pygame.mixer.music.load('endlessmotion.wav')
-#     # pygame.mixer.music.play(-1)
-#     # new_piece()
-#     draw_lines()
-#     pygame.mouse.set_visible(False)
-#     start_time = pygame.time.get_ticks()
-#     clock = pygame.time.Clock
-#     while True:
-#         theTime = hud.limit5(screen, start_time)
-#         if theTime == "ASSY":
-#             game_over()
-#         ###ATTEMPT AT GAME CLOCK
-#         pygame.display.update()
-#         for event in pygame.event.get():
-#             # spacebar quits game
-#             if event.type == pygame.KEYDOWN:
-#                 if event.key == pygame.K_SPACE:
-#                     pygame.quit()
-#                     sys.exit(0)
-#
-#             if event.type == pygame.QUIT:
-#                 pygame.quit()
-#                 sys.exit(0)
-
 main_menu.menu()

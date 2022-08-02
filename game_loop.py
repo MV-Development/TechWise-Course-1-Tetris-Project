@@ -23,8 +23,24 @@ pygame.mouse.set_visible(True)
 pygame.display.set_caption('Block Game')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
+
+##########################################################################################
+# Source of Pieces
 PIECE_NAMES = pieces.PIECE_NAMES
 
+def draw_next_piece(piece):
+    pygame.draw.rect(screen, BLACK, (600, 250, 150, 150))
+    pygame.draw.rect(screen, WHITE, (600, 250, 150, 150), 3)
+    font = pygame.font.SysFont('franklingothicmedium', 30)
+    next_text = font.render('Next Piece ', False, WHITE)
+    screen.blit(next_text, (601, 200, 30, 30))
+    shape = piece.tetro[piece.rotation % len(piece.tetro)]
+
+    for y, row in enumerate(shape):
+        row = list(row)
+        for x, col in enumerate(row):
+            if col == 'o':
+                pygame.draw.rect(screen, piece.color, (600 + x * BLOCK_SIZE, 260 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
 
 def display_score(score):
     font = pygame.font.Font(None, 30)
@@ -143,6 +159,7 @@ def game():
     score = 0
     while True:
         grid = create_grid(fallen)
+        draw_next_piece(next_piece)
         hud.create_hud(screen, start_time)
         display_score(score)
         clock.tick(30)
