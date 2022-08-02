@@ -23,6 +23,9 @@ pygame.mouse.set_visible(True)
 pygame.display.set_caption('Block Game')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
+
+##########################################################################################
+# Source of Pieces
 PIECE_NAMES = pieces.PIECE_NAMES
 
 
