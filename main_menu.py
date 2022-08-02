@@ -1,3 +1,5 @@
+##########################################################################################
+# Import statements
 import pygame
 import sys
 import game_loop
@@ -14,7 +16,7 @@ w_height = 800
 
 screen = pygame.display.set_mode((w_width, w_height))
 pygame.mouse.set_visible(True)
-pygame.display.set_caption('Tetris')
+pygame.display.set_caption('Block Game')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
@@ -31,7 +33,7 @@ def menu():
 
     # text on buttons
     tetris_font = pygame.font.SysFont('javanesetext', 100)
-    tetris_text = tetris_font.render('TETRIS', False, WHITE)
+    tetris_text = tetris_font.render('Block Game', False, WHITE)
     tetris_rect = tetris_text.get_rect(center=tetris_button.center)
     screen.blit(tetris_text, tetris_rect)
     font = pygame.font.SysFont('franklingothicmedium', 50)

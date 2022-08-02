@@ -23,7 +23,7 @@ w_height = 800
 # screen initialization
 screen = pygame.display.set_mode((w_width, w_height))
 pygame.mouse.set_visible(True)
-pygame.display.set_caption('Tetris')
+pygame.display.set_caption('Block Game')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 PIECE_NAMES = pieces.PIECE_NAMES
