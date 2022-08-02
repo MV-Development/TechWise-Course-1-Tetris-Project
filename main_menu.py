@@ -20,11 +20,19 @@ pygame.display.set_caption('Block Game')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
+color_speed = 1
+color_direction = [-1, 1, -1]
+default_color = [140, 120, 230]
+
+def color_change(color, direction):
+    for i in range(len(color)):
+        color[i] += color_speed * direction[i]
+        # reversing the direction of the intensity
+        if color[i] >= 255 or color[i] <= 0:
+            direction[i] *= -1
 
 def menu():
     # main menu
-    tetris_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 130, 160, 100))
-
     # start game button
     start_button = pygame.draw.rect(screen, (118, 238, 198), pygame.Rect(320, 350, 160, 100))
 
@@ -32,10 +40,6 @@ def menu():
     quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
     # text on buttons
-    tetris_font = pygame.font.SysFont('javanesetext', 100)
-    tetris_text = tetris_font.render('Block Game', False, WHITE)
-    tetris_rect = tetris_text.get_rect(center=tetris_button.center)
-    screen.blit(tetris_text, tetris_rect)
     font = pygame.font.SysFont('franklingothicmedium', 50)
     start_text = font.render('Start', False, BLACK)
     start_rect = start_text.get_rect(center=start_button.center)
@@ -67,6 +71,17 @@ def menu():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+
+        # title game button & text
+        title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 130, 160, 100))
+        title_font = pygame.font.SysFont('javanesetext', 100)
+        title_text = title_font.render('BLOCK GAME', False, default_color)
+        title_rect = title_text.get_rect(center=title_button.center)
+        screen.blit(title_text, title_rect)
+
+        color_change(default_color, color_direction)
+
+        pygame.display.update()
 
 
 def game_select():
@@ -117,3 +132,4 @@ def game_select():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+
