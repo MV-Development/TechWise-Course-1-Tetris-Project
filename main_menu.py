@@ -23,6 +23,8 @@ pygame.display.set_icon(program_icon)
 color_speed = 1
 color_direction = [-1, 1, -1]
 default_color = [140, 120, 230]
+color_direction1 = [-1, 1, 1]
+default_color1 = [120, 140, 240]
 
 def color_change(color, direction):
     for i in range(len(color)):
@@ -73,13 +75,20 @@ def menu():
                 sys.exit(0)
 
         # title game button & text
-        title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 130, 160, 100))
+        title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 120, 160, 100))
         title_font = pygame.font.SysFont('javanesetext', 100)
-        title_text = title_font.render('BLOCK GAME', False, default_color)
+        title_text = title_font.render('BLOCK', False, default_color)
         title_rect = title_text.get_rect(center=title_button.center)
         screen.blit(title_text, title_rect)
 
+        title1_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 200, 160, 100))
+        title1_font = pygame.font.SysFont('javanesetext', 100)
+        title1_text = title1_font.render('GAME', False, default_color1)
+        title1_rect = title1_text.get_rect(center=title1_button.center)
+        screen.blit(title1_text, title1_rect)
+
         color_change(default_color, color_direction)
+        color_change(default_color1, color_direction1)
 
         pygame.display.update()
 
