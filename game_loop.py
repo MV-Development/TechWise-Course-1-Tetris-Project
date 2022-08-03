@@ -6,6 +6,7 @@ import sys
 import hud
 import pieces
 import main_menu
+from collections import deque
 
 ##########################################################################################
 # Global Variables
@@ -28,32 +29,6 @@ pygame.display.set_icon(program_icon)
 # Source of Pieces
 PIECE_NAMES = pieces.PIECE_NAMES
 
-def draw_next_piece(piece):
-    pygame.draw.rect(screen, BLACK, (600, 250, 150, 150))
-    pygame.draw.rect(screen, WHITE, (600, 250, 150, 150), 3)
-    font = pygame.font.SysFont('franklingothicmedium', 30)
-    next_text = font.render('Next Piece ', False, WHITE)
-    screen.blit(next_text, (601, 200, 30, 30))
-    shape = piece.tetro[piece.rotation % len(piece.tetro)]
-
-    for y, row in enumerate(shape):
-        row = list(row)
-        for x, col in enumerate(row):
-            if col == 'o':
-                pygame.draw.rect(screen, piece.color, (600 + x * BLOCK_SIZE, 260 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
-
-def display_score(score):
-    font = pygame.font.Font(None, 30)
-    text = font.render(f'{score}', True, WHITE)
-    screen.blit(text, (550, 50))
-
-
-def lose_game(fallen):
-    for positions in fallen:
-        x, y = positions
-        if y < 1:
-            return True
-
 
 def clear_rows(grid, fallen, score):
     i = 0
@@ -69,6 +44,69 @@ def clear_rows(grid, fallen, score):
                         fallen[(col, x)] = fallen[(col, x - 1)]
                         del fallen[col, x - 1]
     return score
+
+
+def draw_next_piece(pieces):
+    pygame.draw.rect(screen, BLACK, (600, 130, 150, 575))
+    pygame.draw.rect(screen, WHITE, (600, 130, 150, 575), 3)
+    font = pygame.font.SysFont('franklingothicmedium', 30)
+    next_text = font.render('Next Pieces', False, WHITE)
+    screen.blit(next_text, (601, 90, 30, 30))
+    i = -130
+    for n in range(len(pieces)):
+        shape = pieces[n].tetro[pieces[n].rotation % len(pieces[n].tetro)]
+        i += 130
+        for y, row in enumerate(shape):
+            row = list(row)
+            for x, col in enumerate(row):
+                if col == 'o':
+                    pygame.draw.rect(screen, pieces[n].color,
+                                     (600 + x * BLOCK_SIZE, 140 + i + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
+
+
+def display_score(score):
+    font = pygame.font.Font(None, 30)
+    text = font.render(f'{score}', True, WHITE)
+    screen.blit(text, (550, 50))
+
+
+def lose_game(fallen):
+    for positions in fallen:
+        x, y = positions
+        if y < 1:
+            return True
+
+
+def hold(active_piece, next_pieces):
+    held = active_piece
+    active_piece = next_pieces.popleft()
+    next_pieces.append(new_piece())
+    return held, active_piece, next_pieces
+
+
+def swap_hold(held, active_piece):
+    held, active_piece = active_piece, held
+    active_piece.x, active_piece.y = 5, 0
+    return held, active_piece
+
+
+def hold_display(held):
+    shape = held.tetro[held.rotation % len(held.tetro)]
+
+    for y, row in enumerate(shape):
+        row = list(row)
+        for x, col in enumerate(row):
+            if col == 'o':
+                pygame.draw.rect(screen, held.color,
+                                 (50 + x * BLOCK_SIZE, 140 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
+
+
+def hold_box():
+    pygame.draw.rect(screen, BLACK, (50, 130, 150, 150))
+    pygame.draw.rect(screen, WHITE, (50, 130, 150, 150), 3)
+    font = pygame.font.SysFont('franklingothicmedium', 30)
+    held_text = font.render('Held', False, WHITE)
+    screen.blit(held_text, (90, 90, 30, 30))
 
 
 ##########################################################################################
@@ -151,26 +189,38 @@ def game():
     fallen = {}
     grid = create_grid(fallen)
     active_piece = new_piece()
-    next_piece = new_piece()
     change_piece = False
     clock = pygame.time.Clock()
     active_time = 0
-    active_fall_speed = 0.1
+    active_fall_speed = 0.3
     score = 0
+    next_pieces = []
+    next_pieces = deque(next_pieces)
+    held = None
+    round_hold = False
+    for i in range(4):
+        next_pieces.append(new_piece())
     while True:
+        hold_box()
         grid = create_grid(fallen)
-        draw_next_piece(next_piece)
+        draw_next_piece(next_pieces)
         hud.create_hud(screen, start_time)
         display_score(score)
         clock.tick(30)
         active_time += clock.get_rawtime()
+        if held:
+            hold_display(held)
 
         for event in pygame.event.get():
             # space bar quits game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    pygame.quit()
-                    sys.exit(0)
+                    if held is None and not round_hold:
+                        held, active_piece, next_pieces = hold(active_piece, next_pieces)
+                        round_hold = True
+                    elif not round_hold:
+                        held, active_piece = swap_hold(held, active_piece)
+                        round_hold = True
                 if event.key == pygame.K_RIGHT:
                     active_piece.x += 1
                     if not (empty_space(active_piece, grid)):
@@ -208,9 +258,9 @@ def game():
             for pos in tetro_pos:
                 n = (pos[0], pos[1])
                 fallen[n] = active_piece.color
-
-            active_piece = next_piece
-            next_piece = new_piece()
+            round_hold = False
+            active_piece = next_pieces.popleft()
+            next_pieces.append(new_piece())
             change_piece = False
             score = clear_rows(grid, fallen, score)
         if lose_game(fallen):
