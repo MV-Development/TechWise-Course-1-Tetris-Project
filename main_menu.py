@@ -1,24 +1,24 @@
 ##########################################################################################
 # Import statements
+import sys
 import pygame
 import block_game
 import interface
+import select_screen
+
+##########################################################################################
+# Global Variables
 import select_screen
 
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
 
 ##########################################################################################
-# Global Variables
+# main menu
+tetris_button = pygame.draw.rect(SCREEN, interface.BLACK, pygame.Rect(320, 130, 160, 100))
 
-
-def menu(size, block_size):
-    # main menu
-    tetris_button = pygame.draw.rect(SCREEN, interface.BLACK, pygame.Rect(320, 130, 160, 100))
-
-    # start game button
-    start_button = pygame.draw.rect(SCREEN, (118, 238, 198), pygame.Rect(320, 350, 160, 100))
-
+# start game button
+start_button = pygame.draw.rect(SCREEN, (118, 238, 198), pygame.Rect(320, 350, 160, 100))
 
 # quit game button
 quit_button = pygame.draw.rect(SCREEN, interface.RED, pygame.Rect(320, 550, 160, 100))
@@ -47,7 +47,7 @@ while True:
             # get mouse position
             mouse = pygame.mouse.get_pos()
             if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                select_screen.difficulty(SCREEN, SIZE)
+                select_screen.difficulty_select()
             elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
                 pygame.quit()
                 sys.exit(0)

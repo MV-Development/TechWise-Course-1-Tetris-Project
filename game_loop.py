@@ -1,9 +1,11 @@
 ##########################################################################################
 # Import statements
+import sys
 import pygame
 import random
 import block_game
 import interface
+import hud
 import pieces
 import main_menu
 
