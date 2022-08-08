@@ -130,11 +130,11 @@ def game_select():
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
                 if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    game_loop.game()
+                    game_loop.game(10)
                 elif 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
-                    game_loop.game()
+                    game_loop.game(5)
                 elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 550:
-                    game_loop.game()
+                    game_loop.game(15)
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
                     pygame.quit()
                     sys.exit(0)

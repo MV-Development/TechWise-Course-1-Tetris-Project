@@ -176,7 +176,7 @@ def empty_space(tetro, grid):
 
 ##########################################################################################
 # Main Game loop
-def game():
+def game(timeLimit):
     # change screen color
     screen.fill(BLACK)
     # pygame.mixer.music.stop()
@@ -204,7 +204,9 @@ def game():
         hold_box()
         grid = create_grid(fallen)
         draw_next_piece(next_pieces)
-        hud.create_hud(screen, start_time)
+        gameLimit = hud.create_hud(screen, start_time, timeLimit)
+        if gameLimit == -1:
+            game_over(score)
         display_score(score)
         clock.tick(30)
         active_time += clock.get_rawtime()
