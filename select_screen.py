@@ -27,8 +27,7 @@ def difficulty_select():
     limit5_text = font.render('5 Min Limit', False, interface.BLACK)
     limit5_rect = limit5_text.get_rect(center=limit5_button.center)
     SCREEN.blit(limit5_text, limit5_rect)
-    # limit5_button = interface.MenuButton.__init__(SCREEN, interface.RED, SIZE * 0.4, SIZE * 0.3125, SIZE,
-    #                                              '''5 Min Limit''')
+    # limit5_button = interface.MenuButton.(SCREEN, interface.RED, SIZE * 0.4, SIZE * 0.3125, SIZE, '5 Min Limit', 'franklingothicmedium', 28)
     # limit5_button.draw_button()
 
     limit10_button = pygame.draw.rect(SCREEN, (30, 144, 255),
