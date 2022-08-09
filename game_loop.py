@@ -192,7 +192,9 @@ def game(timeLimit):
     change_piece = False
     clock = pygame.time.Clock()
     active_time = 0
-    active_fall_speed = 0.3
+    min_speed = .2
+    max_speed = .05
+    active_fall_speed = 0.2
     score = 0
     next_pieces = []
     next_pieces = deque(next_pieces)
@@ -204,7 +206,12 @@ def game(timeLimit):
         hold_box()
         grid = create_grid(fallen)
         draw_next_piece(next_pieces)
+        fall_interval = (max_speed - min_speed)/timeLimit
+        minutes = "00"
         gameLimit = hud.create_hud(screen, start_time, timeLimit)
+        if minutes != gameLimit:
+           active_fall_speed += fall_interval
+           minutes = gameLimit
         if gameLimit == -1:
             game_over(score)
         display_score(score)
