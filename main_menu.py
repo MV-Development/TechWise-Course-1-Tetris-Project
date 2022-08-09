@@ -29,8 +29,11 @@ quit_button = interface.MenuButton(SCREEN, interface.RED, SIZE * (320 / 800), SI
                                    interface.BLACK, 'franklingothicmedium', 50)
 quit_button.draw_button()
 
+# Update Display
 pygame.display.flip()
 
+########################################################################################################################
+# Take User Input
 while True:
     for event in pygame.event.get():
         # on event click

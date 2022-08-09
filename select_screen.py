@@ -16,7 +16,6 @@ SIZE = block_game.SIZE
 
 ########################################################################################################################
 # Main Function
-
 def difficulty_select():
     SCREEN.fill(interface.BLACK)
 
@@ -40,10 +39,11 @@ def difficulty_select():
                                        interface.BLACK, 'franklingothicmedium', 28)
     quit_button.draw_button()
 
+    # Update Display
     pygame.display.flip()
 
     ####################################################################################################################
-    # Input Loop
+    # Take User Input
     while True:
         for event in pygame.event.get():
             # on event click
