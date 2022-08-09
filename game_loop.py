@@ -1,4 +1,4 @@
-##########################################################################################
+########################################################################################################################
 # Import statements
 import sys
 import pygame
@@ -8,10 +8,11 @@ import interface
 import hud
 import pieces
 import main_menu
+import select_screen
 
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
-##########################################################################################
+########################################################################################################################
 # Global Variables
 BLOCK_SIZE = 30
 
@@ -26,7 +27,7 @@ pygame.display.set_caption('Block Game')
 program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
-##########################################################################################
+########################################################################################################################
 # Source of Pieces
 PIECE_NAMES = pieces.PIECE_NAMES
 
@@ -76,7 +77,7 @@ def clear_rows(grid, fallen, score):
     return score
 
 
-##########################################################################################
+########################################################################################################################
 # Grid Management
 def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the screen
     x = 250
@@ -141,15 +142,11 @@ def empty_space(tetro, grid):
     return True
 
 
-##########################################################################################
+########################################################################################################################
 # Main Game loop
 def game():
     # change screen color
     screen.fill(interface.BLACK)
-    # pygame.mixer.music.stop()
-    # pygame.mixer.music.load('endlessmotion.wav')
-    # pygame.mixer.music.play(-1)
-    # new_piece()
     draw_lines()
     # pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
@@ -223,7 +220,7 @@ def game():
         update_grid(grid)
 
 
-##########################################################################################
+########################################################################################################################
 # Game Over
 def game_over(score):
     screen.fill(interface.BLACK)
@@ -255,7 +252,7 @@ def game_over(score):
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
                 if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    main_menu.game_select()
+                    select_screen.difficulty_select()
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
                     pygame.quit()
                     sys.exit(0)
