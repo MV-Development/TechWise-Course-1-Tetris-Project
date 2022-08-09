@@ -18,7 +18,6 @@ SIZE = pygame.display.list_modes()[0][1] / 2
 screen = pygame.display.set_mode((SIZE, SIZE))
 pygame.display.set_caption('''Block Game''')
 pygame.display.set_icon(pygame.image.load('icon.png'))
-
 pygame.mouse.set_visible(True)
 
 ########################################################################################################################

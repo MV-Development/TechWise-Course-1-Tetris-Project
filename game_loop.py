@@ -7,25 +7,13 @@ import block_game
 import interface
 import hud
 import pieces
-import main_menu
 import select_screen
 
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
 ########################################################################################################################
 # Global Variables
-BLOCK_SIZE = 30
-
-# window variables
-w_width = 800
-w_height = 800
-
-# screen initialization
-screen = pygame.display.set_mode((w_width, w_height))
-pygame.mouse.set_visible(True)
-pygame.display.set_caption('Block Game')
-program_icon = pygame.image.load('icon.png')
-pygame.display.set_icon(program_icon)
+BLOCK_SIZE = SIZE * 0.0375
 
 ########################################################################################################################
 # Source of Pieces
@@ -33,25 +21,25 @@ PIECE_NAMES = pieces.PIECE_NAMES
 
 
 def draw_next_piece(piece):
-    pygame.draw.rect(screen, interface.BLACK, (600, 250, 150, 150))
-    pygame.draw.rect(screen, interface.WHITE, (600, 250, 150, 150), 3)
+    pygame.draw.rect(SCREEN, interface.BLACK, (600, 250, 150, 150))
+    pygame.draw.rect(SCREEN, interface.WHITE, (600, 250, 150, 150), 3)
     font = pygame.font.SysFont('franklingothicmedium', 30)
     next_text = font.render('Next Piece ', False, interface.WHITE)
-    screen.blit(next_text, (601, 200, 30, 30))
+    SCREEN.blit(next_text, (601, 200, 30, 30))
     shape = piece.tetro[piece.rotation % len(piece.tetro)]
 
     for y, row in enumerate(shape):
         row = list(row)
         for x, col in enumerate(row):
             if col == 'o':
-                pygame.draw.rect(screen, piece.color,
+                pygame.draw.rect(SCREEN, piece.color,
                                  (600 + x * BLOCK_SIZE, 260 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
 
 
 def display_score(score):
     font = pygame.font.Font(None, 30)
     text = font.render(f'{score}', True, interface.WHITE)
-    screen.blit(text, (550, 50))
+    SCREEN.blit(text, (550, 50))
 
 
 def lose_game(fallen):
@@ -79,15 +67,15 @@ def clear_rows(grid, fallen, score):
 
 ########################################################################################################################
 # Grid Management
-def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the screen
+def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the SCREEN
     x = 250
     y = 100
 
     for _ in range(21):
-        pygame.draw.line(screen, interface.WHITE, (250, y), (w_width - 250, y))
+        pygame.draw.line(SCREEN, interface.WHITE, (250, y), (SIZE - 250, y))
         y += BLOCK_SIZE
     for _ in range(11):
-        pygame.draw.line(screen, interface.WHITE, (x, 100), (x, w_width - 100))
+        pygame.draw.line(SCREEN, interface.WHITE, (x, 100), (x, SIZE - 100))
         x += BLOCK_SIZE
 
 
@@ -97,7 +85,7 @@ def update_grid(grid):
     for row in range(len(grid)):
         y += BLOCK_SIZE
         for col in range(len(grid[row])):
-            pygame.draw.rect(screen, grid[row][col], (x + BLOCK_SIZE * (col + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
+            pygame.draw.rect(SCREEN, grid[row][col], (x + BLOCK_SIZE * (col + 1), y, BLOCK_SIZE - 1, BLOCK_SIZE - 1))
     pygame.display.update()
 
 
@@ -145,8 +133,8 @@ def empty_space(tetro, grid):
 ########################################################################################################################
 # Main Game loop
 def game():
-    # change screen color
-    screen.fill(interface.BLACK)
+    # change SCREEN color
+    SCREEN.fill(interface.BLACK)
     draw_lines()
     # pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
@@ -162,7 +150,7 @@ def game():
     while True:
         grid = create_grid(fallen)
         draw_next_piece(next_piece)
-        hud.create_hud(screen, start_time)
+        hud.create_hud(SCREEN, start_time)
         display_score(score)
         clock.tick(30)
         active_time += clock.get_rawtime()
@@ -223,24 +211,24 @@ def game():
 ########################################################################################################################
 # Game Over
 def game_over(score):
-    screen.fill(interface.BLACK)
+    SCREEN.fill(interface.BLACK)
     font = pygame.font.SysFont('franklingothicmedium', 60)
-    game_over_space = pygame.draw.rect(screen, interface.BLACK, pygame.Rect(320, 150, 160, 100))
+    game_over_space = pygame.draw.rect(SCREEN, interface.BLACK, pygame.Rect(320, 150, 160, 100))
     game_over_text = font.render('GAME OVER', False, interface.WHITE)
     game_over_rect = game_over_text.get_rect(center=game_over_space.center)
-    screen.blit(game_over_text, game_over_rect)
-    score_space = pygame.draw.rect(screen, interface.BLACK, pygame.Rect(320, 250, 160, 100))
+    SCREEN.blit(game_over_text, game_over_rect)
+    score_space = pygame.draw.rect(SCREEN, interface.BLACK, pygame.Rect(320, 250, 160, 100))
     score_text = font.render(f'FINAL SCORE: {score}', False, interface.WHITE)
     score_rect = score_text.get_rect(center=score_space.center)
-    screen.blit(score_text, score_rect)
-    restart_button = pygame.draw.rect(screen, interface.GREEN, pygame.Rect(320, 350, 160, 100))
+    SCREEN.blit(score_text, score_rect)
+    restart_button = pygame.draw.rect(SCREEN, interface.GREEN, pygame.Rect(320, 350, 160, 100))
     restart_text = font.render('Retry', False, interface.BLACK)
     restart_rect = restart_text.get_rect(center=restart_button.center)
-    screen.blit(restart_text, restart_rect)
-    quit_button = pygame.draw.rect(screen, interface.RED, pygame.Rect(320, 550, 160, 100))
+    SCREEN.blit(restart_text, restart_rect)
+    quit_button = pygame.draw.rect(SCREEN, interface.RED, pygame.Rect(320, 550, 160, 100))
     quit_text = font.render('Quit', False, interface.BLACK)
     quit_rect = quit_text.get_rect(center=quit_button.center)
-    screen.blit(quit_text, quit_rect)
+    SCREEN.blit(quit_text, quit_rect)
 
     pygame.mouse.set_visible(True)
     pygame.display.flip()

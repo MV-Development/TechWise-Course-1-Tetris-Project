@@ -8,6 +8,7 @@ import game_loop
 
 ########################################################################################################################
 # Global Variables
+from interface import MenuButton
 
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
@@ -19,50 +20,43 @@ SIZE = block_game.SIZE
 def difficulty_select():
     SCREEN.fill(interface.BLACK)
 
-    font = pygame.font.SysFont('franklingothicmedium', 28)
-    font_title = pygame.font.SysFont('franklingothicmedium', 60)
+    ####################################################################################################################
+    # Time Limit Buttons
+    limit5_button = interface.MenuButton(SCREEN, interface.WHITE, SIZE * 0.4, SIZE * 0.3125, SIZE, '5 Minute',
+                                         interface.BLACK, 'franklingothicmedium', 28)
+    limit5_button.draw_button()
 
-    limit5_button = pygame.draw.rect(SCREEN, interface.RED,
-                                     pygame.Rect((SIZE * 0.4), 250, (SIZE * 0.2), (SIZE * 0.125)))
-    limit5_text = font.render('5 Min Limit', False, interface.BLACK)
-    limit5_rect = limit5_text.get_rect(center=limit5_button.center)
-    SCREEN.blit(limit5_text, limit5_rect)
-    # limit5_button = interface.MenuButton.(SCREEN, interface.RED, SIZE * 0.4, SIZE * 0.3125, SIZE, '5 Min Limit', 'franklingothicmedium', 28)
-    # limit5_button.draw_button()
+    limit10_button = interface.MenuButton(SCREEN, (30, 144, 255), SIZE * 0.4, SIZE * (350 / 800), SIZE, "10 Minute",
+                                          interface.BLACK, 'franklingothicmedium', 28)
+    limit10_button.draw_button()
 
-    limit10_button = pygame.draw.rect(SCREEN, (30, 144, 255),
-                                      pygame.Rect((SIZE * 0.4), 350, (SIZE * 0.2), (SIZE * 0.125)))
-    limit10_text = font.render('10 Min Limit', False, interface.BLACK)
-    limit10_rect = limit10_text.get_rect(center=limit10_button.center)
-    SCREEN.blit(limit10_text, limit10_rect)
+    limit15_button = interface.MenuButton(SCREEN, (41, 238, 238), SIZE * 0.4, SIZE * (450 / 800), SIZE, "15 Minute",
+                                          interface.BLACK, 'franklingothicmedium', 28)
+    limit15_button.draw_button()
 
-    limit15_button = pygame.draw.rect(SCREEN, (141, 238, 238),
-                                      pygame.Rect((SIZE * 0.4), 450, (SIZE * 0.2), (SIZE * 0.125)))
-    limit15_text = font.render('15 Min Limit', False, interface.BLACK)
-    limit15_rect = limit15_text.get_rect(center=limit15_button.center)
-    SCREEN.blit(limit15_text, limit15_rect)
+    ####################################################################################################################
+    # Quit Button
+    quit_button = interface.MenuButton(SCREEN, interface.RED, SIZE * 0.4, SIZE * (550 / 800), SIZE, "QUIT",
+                                       interface.BLACK, 'franklingothicmedium', 28)
+    quit_button.draw_button()
 
-    # quit game button
-    quit_button = pygame.draw.rect(SCREEN, interface.RED, pygame.Rect(320, 550, 160, 100))
-    quit_text = font.render('Quit', False, interface.BLACK)
-    quit_rect = quit_text.get_rect(center=quit_button.center)
-    SCREEN.blit(quit_text, quit_rect)
-
-    pygame.mouse.set_visible(True)
     pygame.display.flip()
+
+    ####################################################################################################################
+    # Input Loop
     while True:
         for event in pygame.event.get():
             # on event click
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
-                if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
+                if limit5_button.is_clicked():
                     game_loop.game()
-                elif 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
+                if limit10_button.is_clicked():
                     game_loop.game()
-                elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 550:
+                if limit15_button.is_clicked():
                     game_loop.game()
-                elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
+                if quit_button.is_clicked():
                     pygame.quit()
                     sys.exit(0)
             if event.type == pygame.QUIT:

@@ -104,7 +104,7 @@ T = [['*****',
 
 PIECE_NAMES = [O, L, S, Z, J, I, T]
 WHITE, BLACK, BLUE, RED, GREEN, YELLOW, PURPLE = (255, 255, 255), (0, 0, 0), (0, 0, 255), (255, 0, 0), (0, 255, 0), (
-255, 233, 0), (187, 41, 187)
+    255, 233, 0), (187, 41, 187)
 COLORS = [BLUE, RED, GREEN, YELLOW, PURPLE]
 
 

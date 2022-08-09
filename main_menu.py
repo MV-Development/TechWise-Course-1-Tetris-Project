@@ -14,15 +14,8 @@ SIZE = block_game.SIZE
 
 ########################################################################################################################
 # main menu
-# tetris_button = pygame.draw.rect(SCREEN, interface.BLACK,
-#                                 pygame.Rect(SIZE * 0.4, SIZE * 0.15, SIZE * 0.2, SIZE * 0.125))
-# tetris_font = pygame.font.SysFont('javanesetext', 100)
-# tetris_text = tetris_font.render('Block Game', False, interface.WHITE)
-# tetris_rect = tetris_text.get_rect(center=tetris_button.center)
-# SCREEN.blit(tetris_text, tetris_rect)
-
-tetris_button = interface.MenuButton(SCREEN, interface.BLACK, SIZE * 0.4, SIZE * 0.15, SIZE, 'BLOCK GAME',
-                                     interface.WHITE, 'javanesetext', 100)
+tetris_button = interface.MenuButton(SCREEN, interface.BLUE, SIZE * 0.4, SIZE * 0.15, SIZE, 'BLOCK GAME',
+                                     interface.WHITE, 'javanesetext', 50)
 tetris_button.draw_button()
 
 font = pygame.font.SysFont('franklingothicmedium', 50)
@@ -36,9 +29,6 @@ quit_button = interface.MenuButton(SCREEN, interface.RED, SIZE * (320 / 800), SI
                                    interface.BLACK, 'franklingothicmedium', 50)
 quit_button.draw_button()
 
-# add everything to SCREEN
-
-pygame.mouse.set_visible(True)
 pygame.display.flip()
 
 while True:
