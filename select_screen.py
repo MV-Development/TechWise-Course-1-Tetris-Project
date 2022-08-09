@@ -22,21 +22,21 @@ def difficulty_select():
     ####################################################################################################################
     # Time Limit Buttons
     limit5_button = interface.MenuButton(SCREEN, interface.WHITE, SIZE * 0.4, SIZE * 0.3125, SIZE, '5 Minute',
-                                         interface.BLACK, 'franklingothicmedium', 28)
+                                         interface.BLACK, 'franklingothicmedium', int(SIZE * (28/800)))
     limit5_button.draw_button()
 
     limit10_button = interface.MenuButton(SCREEN, (30, 144, 255), SIZE * 0.4, SIZE * (350 / 800), SIZE, "10 Minute",
-                                          interface.BLACK, 'franklingothicmedium', 28)
+                                          interface.BLACK, 'franklingothicmedium', int(SIZE * (28/800)))
     limit10_button.draw_button()
 
     limit15_button = interface.MenuButton(SCREEN, (41, 238, 238), SIZE * 0.4, SIZE * (450 / 800), SIZE, "15 Minute",
-                                          interface.BLACK, 'franklingothicmedium', 28)
+                                          interface.BLACK, 'franklingothicmedium', int(SIZE * (28/800)))
     limit15_button.draw_button()
 
     ####################################################################################################################
     # Quit Button
     quit_button = interface.MenuButton(SCREEN, interface.RED, SIZE * 0.4, SIZE * (550 / 800), SIZE, "QUIT",
-                                       interface.BLACK, 'franklingothicmedium', 28)
+                                       interface.BLACK, 'franklingothicmedium', int(SIZE * (28/800)))
     quit_button.draw_button()
 
     # Update Display

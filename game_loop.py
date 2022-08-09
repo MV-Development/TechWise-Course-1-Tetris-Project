@@ -7,7 +7,8 @@ import block_game
 import interface
 import hud
 import pieces
-import select_screen
+import game_over
+
 
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
@@ -21,9 +22,9 @@ PIECE_NAMES = pieces.PIECE_NAMES
 
 
 def draw_next_piece(piece):
-    pygame.draw.rect(SCREEN, interface.BLACK, (600, 250, 150, 150))
-    pygame.draw.rect(SCREEN, interface.WHITE, (600, 250, 150, 150), 3)
-    font = pygame.font.SysFont('franklingothicmedium', 30)
+    pygame.draw.rect(SCREEN, interface.BLACK, (SIZE * 0.75, SIZE * 0.3125, SIZE * 0.1875, SIZE * 0.1875))
+    pygame.draw.rect(SCREEN, interface.WHITE, (SIZE * 0.75, SIZE * 0.3125, SIZE * 0.1875, SIZE * 0.1875), 3)
+    font = pygame.font.SysFont('franklingothicmedium', int(BLOCK_SIZE))
     next_text = font.render('Next Piece ', False, interface.WHITE)
     SCREEN.blit(next_text, (601, 200, 30, 30))
     shape = piece.tetro[piece.rotation % len(piece.tetro)]
@@ -33,13 +34,14 @@ def draw_next_piece(piece):
         for x, col in enumerate(row):
             if col == 'o':
                 pygame.draw.rect(SCREEN, piece.color,
-                                 (600 + x * BLOCK_SIZE, 260 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
+                                 ((SIZE * 0.75) + x * BLOCK_SIZE, SIZE * (260 / 800) + y * BLOCK_SIZE, BLOCK_SIZE,
+                                  BLOCK_SIZE), 0)
 
 
 def display_score(score):
-    font = pygame.font.Font(None, 30)
+    font = pygame.font.Font(None, int(BLOCK_SIZE))
     text = font.render(f'{score}', True, interface.WHITE)
-    SCREEN.blit(text, (550, 50))
+    SCREEN.blit(text, (SIZE * (550 / 800), SIZE * 50 / 800))
 
 
 def lose_game(fallen):
@@ -204,46 +206,7 @@ def game():
             change_piece = False
             score = clear_rows(grid, fallen, score)
         if lose_game(fallen):
-            game_over(score)
+            game_over.game_over(score)
         update_grid(grid)
 
 
-########################################################################################################################
-# Game Over
-def game_over(score):
-    SCREEN.fill(interface.BLACK)
-    font = pygame.font.SysFont('franklingothicmedium', 60)
-    game_over_space = pygame.draw.rect(SCREEN, interface.BLACK, pygame.Rect(320, 150, 160, 100))
-    game_over_text = font.render('GAME OVER', False, interface.WHITE)
-    game_over_rect = game_over_text.get_rect(center=game_over_space.center)
-    SCREEN.blit(game_over_text, game_over_rect)
-    score_space = pygame.draw.rect(SCREEN, interface.BLACK, pygame.Rect(320, 250, 160, 100))
-    score_text = font.render(f'FINAL SCORE: {score}', False, interface.WHITE)
-    score_rect = score_text.get_rect(center=score_space.center)
-    SCREEN.blit(score_text, score_rect)
-    restart_button = pygame.draw.rect(SCREEN, interface.GREEN, pygame.Rect(320, 350, 160, 100))
-    restart_text = font.render('Retry', False, interface.BLACK)
-    restart_rect = restart_text.get_rect(center=restart_button.center)
-    SCREEN.blit(restart_text, restart_rect)
-    quit_button = pygame.draw.rect(SCREEN, interface.RED, pygame.Rect(320, 550, 160, 100))
-    quit_text = font.render('Quit', False, interface.BLACK)
-    quit_rect = quit_text.get_rect(center=quit_button.center)
-    SCREEN.blit(quit_text, quit_rect)
-
-    pygame.mouse.set_visible(True)
-    pygame.display.flip()
-
-    while True:
-        for event in pygame.event.get():
-            # on event click
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                # get mouse position
-                mouse = pygame.mouse.get_pos()
-                if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    select_screen.difficulty_select()
-                elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
-                    pygame.quit()
-                    sys.exit(0)
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit(0)

@@ -15,18 +15,18 @@ SIZE = block_game.SIZE
 ########################################################################################################################
 # main menu
 tetris_button = interface.MenuButton(SCREEN, interface.BLUE, SIZE * 0.4, SIZE * 0.15, SIZE, 'BLOCK GAME',
-                                     interface.WHITE, 'javanesetext', 50)
+                                     interface.WHITE, 'javanesetext', int(SIZE * (50/800)))
 tetris_button.draw_button()
 
 font = pygame.font.SysFont('franklingothicmedium', 50)
 # start game button
 start_button = interface.MenuButton(SCREEN, interface.GREEN, SIZE * (320 / 800), SIZE * (350 / 800), SIZE, 'START',
-                                    interface.WHITE, 'franklingothicmedium', 50)
+                                    interface.WHITE, 'franklingothicmedium', int(SIZE * (50/800)))
 start_button.draw_button()
 
 # quit game button
 quit_button = interface.MenuButton(SCREEN, interface.RED, SIZE * (320 / 800), SIZE * (550 / 800), SIZE, 'QUIT',
-                                   interface.BLACK, 'franklingothicmedium', 50)
+                                   interface.BLACK, 'franklingothicmedium', int(SIZE * (50/800)))
 quit_button.draw_button()
 
 # Update Display
