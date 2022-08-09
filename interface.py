@@ -13,8 +13,6 @@ BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-pygame.font.init()
-
 
 # limit5_button = pygame.draw.rect(screen, colors.RED, pygame.Rect(320, 250, 160, 100))
 
@@ -42,9 +40,9 @@ class MenuButton:
         background = pygame.draw.rect(self.surface, self.color,
                                       pygame.Rect(self.start_x, self.start_y, self.length, self.width))
         text_font = self.text_style
-        # text = pygame.font.render(self.text, False, BLACK)
-        button = self.text.get_rect(center=background.center)
-        self.surface.blit(self.text, background)
+        text = text_font.render(self.text, False, self.color)
+        button = text.get_rect(center=background.center)
+        self.surface.blit(self.surface, background)
 
     def is_clicked(self):
         mouse = pygame.mouse.get_pos()
