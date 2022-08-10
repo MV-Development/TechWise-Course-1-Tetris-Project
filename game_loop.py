@@ -14,7 +14,7 @@ SCREEN = block_game.screen
 SIZE = block_game.SIZE
 ########################################################################################################################
 # Global Variables
-BLOCK_SIZE = SIZE * 0.0375
+BLOCK_SIZE = block_game.BLOCK_SIZE
 
 ########################################################################################################################
 # Source of Pieces
@@ -70,14 +70,15 @@ def clear_rows(grid, fallen, score):
 ########################################################################################################################
 # Grid Management
 def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the SCREEN
-    x = 250
-    y = 100
+    x = int(SIZE * 250 / 800)
+    y = int(SIZE * 100 / 800)
+    width, height = x, y
 
     for _ in range(21):
-        pygame.draw.line(SCREEN, interface.WHITE, (250, y), (SIZE - 250, y))
+        pygame.draw.line(SCREEN, interface.WHITE, (width, y), (SIZE - width, y))
         y += BLOCK_SIZE
     for _ in range(11):
-        pygame.draw.line(SCREEN, interface.WHITE, (x, 100), (x, SIZE - 100))
+        pygame.draw.line(SCREEN, interface.WHITE, (x, height), (x, SIZE - height))
         x += BLOCK_SIZE
 
 
