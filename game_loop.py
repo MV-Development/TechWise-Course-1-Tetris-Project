@@ -142,7 +142,6 @@ def game():
     # pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
     fallen = {}
-    grid = create_grid(fallen)
     active_piece = new_piece()
     next_piece = new_piece()
     change_piece = False
