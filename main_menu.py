@@ -139,9 +139,10 @@ def color_change(color, direction):
 
 def menu():
     # add menu music
-    # pygame.mixer.init()
-    # pygame.mixer.music.load('birthofahero.wav')
-    # pygame.mixer.music.play(-1)
+    # Music From: https://downloads.khinsider.com/game-soundtracks/album/next-tetris-online
+    pygame.mixer.init()
+    pygame.mixer.music.load('menu_song.mp3')
+    pygame.mixer.music.play(-1)
 
     while True:
         for event in pygame.event.get():
@@ -170,13 +171,13 @@ def menu():
         clock.tick(6)
 
         # title game button & text
-        title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 120, 160, 100))
+        title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 160, 100))
         title_font = pygame.font.SysFont('javanesetext', 100)
         title_text = title_font.render('BLOCK', False, default_color)
         title_rect = title_text.get_rect(center=title_button.center)
         screen.blit(title_text, title_rect)
 
-        title1_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 200, 160, 100))
+        title1_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 180, 160, 100))
         title1_font = pygame.font.SysFont('javanesetext', 100)
         title1_text = title1_font.render('GAME', False, default_color1)
         title1_rect = title1_text.get_rect(center=title1_button.center)
@@ -186,7 +187,7 @@ def menu():
         color_change(default_color1, color_direction1)
 
         # start game button
-        start_button = pygame.draw.rect(screen, (118, 238, 198), pygame.Rect(320, 350, 160, 100))
+        start_button = pygame.draw.rect(screen, (191,239,255), pygame.Rect(320, 350, 160, 100))
 
         # quit game button
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))

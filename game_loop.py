@@ -51,7 +51,7 @@ def draw_next_piece(pieces):
     pygame.draw.rect(screen, WHITE, (600, 130, 150, 575), 3)
     font = pygame.font.SysFont('franklingothicmedium', 30)
     next_text = font.render('Next Pieces', False, WHITE)
-    screen.blit(next_text, (601, 90, 30, 30))
+    screen.blit(next_text, (601, 95, 30, 30))
     i = -130
     for n in range(len(pieces)):
         shape = pieces[n].tetro[pieces[n].rotation % len(pieces[n].tetro)]
@@ -106,7 +106,7 @@ def hold_box():
     pygame.draw.rect(screen, WHITE, (50, 130, 150, 150), 3)
     font = pygame.font.SysFont('franklingothicmedium', 30)
     held_text = font.render('Held', False, WHITE)
-    screen.blit(held_text, (90, 90, 30, 30))
+    screen.blit(held_text, (90, 95, 30, 30))
 
 
 ##########################################################################################
@@ -179,9 +179,11 @@ def empty_space(tetro, grid):
 def game(timeLimit):
     # change screen color
     screen.fill(BLACK)
-    # pygame.mixer.music.stop()
-    # pygame.mixer.music.load('endlessmotion.wav')
-    # pygame.mixer.music.play(-1)
+
+    # Music From: https://downloads.khinsider.com/game-soundtracks/album/mobile-tetris-soundtrack
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load('game_song.mp3')
+    pygame.mixer.music.play(-1)
     # new_piece()
     draw_lines()
     # pygame.mouse.set_visible(False)
