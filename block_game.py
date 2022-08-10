@@ -21,10 +21,5 @@ pygame.display.set_icon(pygame.image.load('icon.png'))
 pygame.mouse.set_visible(True)
 
 ########################################################################################################################
-# Global Variables
-BLOCK_SIZE = int(SIZE * 0.0375)
-PIECE_NAMES = pieces.PIECE_NAMES
-
-########################################################################################################################
 # Start Game
 main_menu
