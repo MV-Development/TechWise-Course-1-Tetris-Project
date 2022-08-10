@@ -34,7 +34,7 @@ class MenuButton:
         text_font = self.text_style
         text = text_font.render(self.text, False, self.text_color)
         button = text.get_rect(center=background.center)
-        self.surface.blit(text, background)
+        self.surface.blit(text, button)
 
     def is_clicked(self):
         mouse = pygame.mouse.get_pos()

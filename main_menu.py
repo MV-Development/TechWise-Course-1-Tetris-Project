@@ -14,8 +14,8 @@ SIZE = block_game.SIZE
 
 ########################################################################################################################
 # main menu
-tetris_button = interface.MenuButton(SCREEN, interface.BLUE, SIZE * 0.4, SIZE * 0.15, SIZE, 'BLOCK GAME',
-                                     interface.WHITE, 'javanesetext', int(SIZE * (50/800)))
+tetris_button = interface.MenuButton(SCREEN, interface.BLACK, SIZE * 0.4, SIZE * 0.15, SIZE, 'BLOCK GAME',
+                                     interface.WHITE, 'javanesetext', int(SIZE * (100 / 800)))
 tetris_button.draw_button()
 
 font = pygame.font.SysFont('franklingothicmedium', 50)

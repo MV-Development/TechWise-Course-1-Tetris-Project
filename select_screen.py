@@ -8,7 +8,6 @@ import game_loop
 
 ########################################################################################################################
 # Global Variables
-from interface import MenuButton
 
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
