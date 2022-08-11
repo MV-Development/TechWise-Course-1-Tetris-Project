@@ -9,7 +9,6 @@ import hud
 import pieces
 import game_over
 
-
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
 ########################################################################################################################
@@ -21,12 +20,17 @@ BLOCK_SIZE = int(SIZE * 0.0375)
 PIECE_NAMES = pieces.PIECE_NAMES
 
 
+########################################################################################################################
+# Next Piece Window
 def draw_next_piece(piece):
-    pygame.draw.rect(SCREEN, interface.BLACK, (SIZE * 0.75, SIZE * 0.3125, SIZE * 0.1875, SIZE * 0.1875))
-    pygame.draw.rect(SCREEN, interface.WHITE, (SIZE * 0.75, SIZE * 0.3125, SIZE * 0.1875, SIZE * 0.1875), 3)
+    pygame.draw.rect(SCREEN, interface.BLACK,
+                     (int(SIZE * 0.75), int(SIZE * 0.3125), int(SIZE * 0.1875), int(SIZE * 0.1875)))
+    pygame.draw.rect(SCREEN, interface.WHITE,
+                     (int(SIZE * 0.75), int(SIZE * 0.3125), int(SIZE * 0.1875), int(SIZE * 0.1875)), 3)
     font = pygame.font.SysFont('franklingothicmedium', int(BLOCK_SIZE))
     next_text = font.render('Next Piece ', False, interface.WHITE)
-    SCREEN.blit(next_text, (601, 200, 30, 30))
+    SCREEN.blit(next_text,
+                (int(SIZE * (601 / 800)), int(SIZE * (200 / 800)), int(SIZE * (30 / 800)), int(SIZE * (30 / 800))))
     shape = piece.tetro[piece.rotation % len(piece.tetro)]
 
     for y, row in enumerate(shape):
@@ -34,16 +38,20 @@ def draw_next_piece(piece):
         for x, col in enumerate(row):
             if col == 'o':
                 pygame.draw.rect(SCREEN, piece.color,
-                                 ((SIZE * 0.75) + x * BLOCK_SIZE, SIZE * (260 / 800) + y * BLOCK_SIZE, BLOCK_SIZE,
-                                  BLOCK_SIZE), 0)
+                                 (int(SIZE * 0.75) + x * BLOCK_SIZE, int(SIZE * (260 / 800) + y * BLOCK_SIZE),
+                                  BLOCK_SIZE, BLOCK_SIZE), 0)
 
 
+########################################################################################################################
+# Score Display
 def display_score(score):
     font = pygame.font.Font(None, int(BLOCK_SIZE))
     text = font.render(f'{score}', True, interface.WHITE)
     SCREEN.blit(text, (SIZE * (550 / 800), SIZE * 50 / 800))
 
 
+########################################################################################################################
+# Game Logic
 def lose_game(fallen):
     for positions in fallen:
         x, y = positions
@@ -70,21 +78,25 @@ def clear_rows(grid, fallen, score):
 ########################################################################################################################
 # Grid Management
 def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the SCREEN
-    x = int(SIZE * 250 / 800)
-    y = int(SIZE * 100 / 800)
-    width, height = x, y
+    start_x = int(SIZE * 0.3125)
+    start_y = int(SIZE * 0.125)
+    height = 20 * BLOCK_SIZE
+    width = 10 * BLOCK_SIZE
 
-    for _ in range(21):
-        pygame.draw.line(SCREEN, interface.WHITE, (width, y), (SIZE - width, y))
-        y += BLOCK_SIZE
-    for _ in range(11):
-        pygame.draw.line(SCREEN, interface.WHITE, (x, height), (x, SIZE - height))
-        x += BLOCK_SIZE
+    for row in range(21):
+        pygame.draw.line(SCREEN, interface.WHITE, (start_x, start_y), (start_x + width, start_y),
+                         int(SIZE * (5 / 800)))
+        start_y += BLOCK_SIZE
+    start_y = int(SIZE * 0.125)
+    for column in range(11):
+        pygame.draw.line(SCREEN, interface.WHITE, (start_x, start_y), (start_x, start_y + height),
+                         int(SIZE * (5 / 800)))
+        start_x += BLOCK_SIZE
 
 
 def update_grid(grid):
-    x = 221
-    y = 71
+    x = int(SIZE * (221 / 800))
+    y = int(SIZE * (71 / 800))
     for row in range(len(grid)):
         y += BLOCK_SIZE
         for col in range(len(grid[row])):
@@ -136,10 +148,7 @@ def empty_space(tetro, grid):
 ########################################################################################################################
 # Main Game loop
 def game():
-    # change SCREEN color
     SCREEN.fill(interface.BLACK)
-    draw_lines()
-    # pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
     fallen = {}
     active_piece = new_piece()
@@ -149,6 +158,7 @@ def game():
     active_time = 0
     active_fall_speed = 0.1
     score = 0
+    draw_lines()
     while True:
         grid = create_grid(fallen)
         draw_next_piece(next_piece)
@@ -208,5 +218,3 @@ def game():
         if lose_game(fallen):
             game_over.game_over(score)
         update_grid(grid)
-
-

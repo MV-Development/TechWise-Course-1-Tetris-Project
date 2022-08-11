@@ -5,6 +5,7 @@ import block_game
 
 # CREATING HUD TO DISPLAY TIME AND SCORE
 
+SIZE = block_game.SIZE
 
 SCREEN = block_game.screen
 
@@ -13,7 +14,7 @@ def create_hud(screen, start_time):
     passed_time = 0
     game_clock = pygame.time.Clock()
     player_score = 0
-    font = pygame.font.Font(None, 30)
+    font = pygame.font.Font(None, int(SIZE * 0.0375))
     font_color = pygame.Color('white')
     passed_time = pygame.time.get_ticks() - start_time
     min_str = str(passed_time // 60000).zfill(2)
@@ -25,14 +26,14 @@ def create_hud(screen, start_time):
     screen.blit(text, (50, 50))
     game_clock.tick(25)
     score_display = font.render("CURRENT SCORE: ", True, font_color)  # ADD SCORE FUNCTION
-    screen.blit(score_display, (300, 50))
+    screen.blit(score_display, (int(SIZE * 0.375), int(SIZE * 0.0625)))
 
 
 def limit5(screen, start_time):
     passed_time = 0
     game_clock = pygame.time.Clock()
     player_score = 0
-    font = pygame.font.Font(None, 30)
+    font = pygame.font.Font(None, int(SIZE * (30 / 800)))
     font_color = pygame.Color('white')
     passed_time = pygame.time.get_ticks() - start_time
     min_str = str(passed_time // 60000).zfill(2)
