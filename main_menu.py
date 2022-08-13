@@ -14,8 +14,6 @@ BLOCK_SIZE = 30
 w_width = 800
 w_height = 800
 
-# All Images: Tetris by Emily L from <a href="https://thenounproject.com/browse/icons/term/tetris/" target="_blank" title="Tetris Icons">Noun Project</a>
-
 class LShapeSprite(pygame.sprite.Sprite):
     def __init__(self):
         super(LShapeSprite, self).__init__()
@@ -236,8 +234,6 @@ def game_select():
         my_group5.draw(screen)
         my_group5.update()
         clock.tick(6)
-
-        pygame.display.update()
 
         # main menu
         # start game button
