@@ -209,6 +209,22 @@ def get_max_speed(difficulty):
 
 ##########################################################################################
 # Main Game loop
+
+def text_maker1(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font1.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
+
+def text_maker2(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font2.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
 def game(timeLimit, difficulty):
     # change screen color
     screen.fill(BLACK)
@@ -217,11 +233,7 @@ def game(timeLimit, difficulty):
     pygame.mixer.music.play(-1)
 
     # quit button
-    quit_button = pygame.draw.rect(screen, RED, pygame.Rect(600, 720, 150, 60))
-    font = pygame.font.Font("font2.ttf", 50)
-    quit_text = font.render('Quit', False, BLACK)
-    quit_rect = quit_text.get_rect(center=quit_button.center)
-    screen.blit(quit_text, quit_rect)
+    text_maker2('Quit', 50, BLACK, RED, 600, 720, 150, 60)
 
     # new_piece()
     draw_lines()
@@ -330,24 +342,11 @@ def game(timeLimit, difficulty):
 # Game Over
 def game_over(score):
     screen.fill(BLACK)
-    font = pygame.font.Font("font1.ttf", 35)
-    game_over_space = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 150, 160, 100))
-    game_over_text = font.render('GAME OVER', False, WHITE)
-    game_over_rect = game_over_text.get_rect(center=game_over_space.center)
-    screen.blit(game_over_text, game_over_rect)
-    score_space = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 250, 160, 100))
-    score_text = font.render(f'FINAL SCORE: {score}', False, WHITE)
-    score_rect = score_text.get_rect(center=score_space.center)
-    screen.blit(score_text, score_rect)
-    font1 = pygame.font.Font("font2.ttf", 50)
-    restart_button = pygame.draw.rect(screen, (191,239,255), pygame.Rect(320, 350, 160, 100))
-    restart_text = font1.render('Retry', False, BLACK)
-    restart_rect = restart_text.get_rect(center=restart_button.center)
-    screen.blit(restart_text, restart_rect)
-    quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-    quit_text = font1.render('Quit', False, BLACK)
-    quit_rect = quit_text.get_rect(center=quit_button.center)
-    screen.blit(quit_text, quit_rect)
+    text_maker1('GAME OVER', 35, WHITE, BLACK, 320, 150, 160, 100)
+    text_maker1(f'FINAL SCORE: {score}', 35, WHITE, BLACK, 320, 250, 160, 100)
+
+    text_maker2('Retry', 50, BLACK, (191,239,255), 320, 350, 160, 100)
+    text_maker2('Quit', 50, BLACK, RED, 320, 550, 160, 100)
 
     pygame.mouse.set_visible(True)
     pygame.display.flip()
