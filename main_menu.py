@@ -212,11 +212,11 @@ def game_select():
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
                 if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    game_loop.game(10)
+                    diff_select(10)
                 elif 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
-                    game_loop.game(5)
+                    diff_select(5)
                 elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 550:
-                    game_loop.game(15)
+                    diff_select(15)
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
                     pygame.quit()
                     sys.exit(0)
@@ -235,8 +235,7 @@ def game_select():
         my_group5.update()
         clock.tick(6)
 
-        # main menu
-        # start game button
+        # time limit buttons
         limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
         limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
         limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
@@ -265,36 +264,7 @@ def game_select():
 
 
 #UNFINISHED DIFFICULTY SELECT SCREEN
-def diff_select():
-    screen.fill(BLACK)
-    # main menu
-    # start game button
-
-    limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
-    limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
-    limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
-
-    # quit game button
-    quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-
-    # text on buttons
-    font = pygame.font.SysFont('franklingothicmedium', 28)
-    font_title = pygame.font.SysFont('franklingothicmedium', 60)
-
-    limit5_text = font.render('EASY', False, BLACK)
-    limit10_text = font.render('NORMAL', False, BLACK)
-    limit15_text = font.render('HARD', False, BLACK)
-    limit5_rect = limit5_text.get_rect(center=limit5_button.center)
-    limit10_rect = limit10_text.get_rect(center=limit10_button.center)
-    limit15_rect = limit15_text.get_rect(center=limit15_button.center)
-    screen.blit(limit5_text, limit5_rect)
-    screen.blit(limit10_text, limit10_rect)
-    screen.blit(limit15_text, limit15_rect)
-    quit_text = font.render('Quit', False, BLACK)
-    quit_rect = quit_text.get_rect(center=quit_button.center)
-    screen.blit(quit_text, quit_rect)
-    pygame.mouse.set_visible(True)
-    pygame.display.flip()
+def diff_select(timeLimit):
     while True:
         for event in pygame.event.get():
             # on event click
@@ -302,14 +272,52 @@ def diff_select():
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
                 if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    game_loop.game(10)
+                    game_loop.game(timeLimit,2)
                 elif 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
-                    game_loop.game(5)
+                    game_loop.game(timeLimit,1)
                 elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 550:
-                    game_loop.game(15)
+                    game_loop.game(timeLimit,3)
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
                     pygame.quit()
                     sys.exit(0)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+
+        screen.fill(BLACK)
+        my_group2.draw(screen)
+        my_group2.update()
+        my_group3.draw(screen)
+        my_group3.update()
+        my_group4.draw(screen)
+        my_group4.update()
+        my_group5.draw(screen)
+        my_group5.update()
+        clock.tick(6)
+
+        # time limit buttons
+        limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
+        limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
+        limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
+
+        # quit game button
+        quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
+
+        # text on buttons
+        font = pygame.font.SysFont('franklingothicmedium', 28)
+        font_title = pygame.font.SysFont('franklingothicmedium', 60)
+
+        limit5_text = font.render('EASY', False, BLACK)
+        limit10_text = font.render('NORMAL', False, BLACK)
+        limit15_text = font.render('HARD', False, BLACK)
+        limit5_rect = limit5_text.get_rect(center=limit5_button.center)
+        limit10_rect = limit10_text.get_rect(center=limit10_button.center)
+        limit15_rect = limit15_text.get_rect(center=limit15_button.center)
+        screen.blit(limit5_text, limit5_rect)
+        screen.blit(limit10_text, limit10_rect)
+        screen.blit(limit15_text, limit15_rect)
+        quit_text = font.render('Quit', False, BLACK)
+        quit_rect = quit_text.get_rect(center=quit_button.center)
+        screen.blit(quit_text, quit_rect)
+        pygame.mouse.set_visible(True)
+        pygame.display.flip()

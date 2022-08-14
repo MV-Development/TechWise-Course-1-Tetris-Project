@@ -174,9 +174,25 @@ def empty_space(tetro, grid):
     return True
 
 
+def get_min_speed(difficulty):
+    if difficulty == 1:
+        return .28
+    elif difficulty == 2:
+        return .24
+    else:
+        return .2
+
+def get_max_speed(difficulty):
+    if difficulty == 1:
+        return .12
+    elif difficulty == 2:
+        return .08
+    else:
+        return .04
+
 ##########################################################################################
 # Main Game loop
-def game(timeLimit):
+def game(timeLimit,difficulty):
     # change screen color
     screen.fill(BLACK)
 
@@ -194,9 +210,9 @@ def game(timeLimit):
     change_piece = False
     clock = pygame.time.Clock()
     active_time = 0
-    min_speed = .2
-    max_speed = .05
-    active_fall_speed = 0.2
+    min_speed = get_min_speed(difficulty)
+    max_speed = get_max_speed(difficulty)
+    active_fall_speed = min_speed
     score = 0
     minutes = "00"
     next_pieces = []
@@ -209,10 +225,10 @@ def game(timeLimit):
         hold_box()
         grid = create_grid(fallen)
         draw_next_piece(next_pieces)
-        fall_interval = (max_speed - min_speed)/timeLimit
+        fall_interval = (min_speed-max_speed)/timeLimit
         gameLimit = hud.create_hud(screen, start_time, timeLimit)
         if minutes != gameLimit:
-           active_fall_speed += fall_interval
+           active_fall_speed -= fall_interval
            minutes = str(gameLimit)
         if gameLimit == -1:
             game_over(score)
