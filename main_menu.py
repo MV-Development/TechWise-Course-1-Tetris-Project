@@ -122,11 +122,29 @@ my_sprite5 = ZShapeSprite()
 my_group5 = pygame.sprite.Group(my_sprite5)
 clock = pygame.time.Clock()
 
+
+def text_maker1(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font1.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
+
+def text_maker2(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font2.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
+
 color_speed = 1
 color_direction = [-1, 1, -1]
 default_color = [140, 120, 230]
 color_direction1 = [-1, 1, 1]
 default_color1 = [120, 140, 240]
+
 
 def color_change(color, direction):
     for i in range(len(color)):
@@ -134,6 +152,7 @@ def color_change(color, direction):
         # reversing the direction of the intensity
         if color[i] >= 255 or color[i] <= 0:
             direction[i] *= -1
+
 
 def menu():
     # add menu music
@@ -168,35 +187,16 @@ def menu():
         clock.tick(6)
 
         # title game button & text
-        title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 160, 100))
-        title_font = pygame.font.Font("font1.ttf", 90)
-        title_text = title_font.render('BLOCK', False, default_color)
-        title_rect = title_text.get_rect(center=title_button.center)
-        screen.blit(title_text, title_rect)
-
-        title1_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 180, 160, 100))
-        title1_font = pygame.font.Font("font1.ttf", 85)
-        title1_text = title1_font.render('GAME', False, default_color1)
-        title1_rect = title1_text.get_rect(center=title1_button.center)
-        screen.blit(title1_text, title1_rect)
+        text_maker1('BLOCK', 90, default_color, BLACK, 320, 100, 160, 100)
+        text_maker1('GAME', 85, default_color1, BLACK, 320, 180, 160, 100)
 
         color_change(default_color, color_direction)
         color_change(default_color1, color_direction1)
 
         # start game button
-        start_button = pygame.draw.rect(screen, (191,239,255), pygame.Rect(320, 350, 160, 100))
-
+        text_maker2('Start', 50, BLACK, (191,239,255), 320, 350, 160, 100)
         # quit game button
-        quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-
-        # text on buttons
-        font = pygame.font.Font("font2.ttf", 50)
-        start_text = font.render('Start', False, BLACK)
-        start_rect = start_text.get_rect(center=start_button.center)
-        screen.blit(start_text, start_rect)
-        quit_text = font.render('Quit', False, BLACK)
-        quit_rect = quit_text.get_rect(center=quit_button.center)
-        screen.blit(quit_text, quit_rect)
+        text_maker2('Quit', 50, BLACK, RED, 320, 550, 160, 100)
 
         # add everything to screen
         pygame.mouse.set_visible(True)
@@ -235,35 +235,12 @@ def game_select():
         clock.tick(6)
 
         # time limit buttons
-        time_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 180, 50))
-        time_font = pygame.font.Font("font1.ttf", 40)
-        time_text = time_font.render('CHOOSE TIME LIMIT', False, WHITE)
-        time_rect = time_text.get_rect(center=time_button.center)
-        screen.blit(time_text, time_rect)
+        text_maker1('CHOOSE TIME LIMIT', 40, WHITE, BLACK, 320, 100, 180, 50)
+        text_maker2('5 Minutes', 25, BLACK, (141, 238, 238), 320, 250, 160, 100)
+        text_maker2('10 Minutes', 25, BLACK, (30, 144, 255), 320, 350, 160, 100)
+        text_maker2('15 Minutes', 25, BLACK, (141, 238, 238), 320, 450, 160, 100)
+        text_maker2('Quit', 25, BLACK, RED, 320, 550, 160, 100)
 
-        limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
-        limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
-        limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
-
-        # quit game button
-        quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-
-        # text on buttons
-        font = pygame.font.Font("font2.ttf", 25)
-        font_title = pygame.font.Font("font2.ttf", 60)
-
-        limit5_text = font.render('5 Minutes', False, BLACK)
-        limit10_text = font.render('10 Minutes', False, BLACK)
-        limit15_text = font.render('15 Minutes', False, BLACK)
-        limit5_rect = limit5_text.get_rect(center=limit5_button.center)
-        limit10_rect = limit10_text.get_rect(center=limit10_button.center)
-        limit15_rect = limit15_text.get_rect(center=limit15_button.center)
-        screen.blit(limit5_text, limit5_rect)
-        screen.blit(limit10_text, limit10_rect)
-        screen.blit(limit15_text, limit15_rect)
-        quit_text = font.render('Quit', False, BLACK)
-        quit_rect = quit_text.get_rect(center=quit_button.center)
-        screen.blit(quit_text, quit_rect)
         pygame.mouse.set_visible(True)
         pygame.display.flip()
 
@@ -300,33 +277,11 @@ def diff_select(timeLimit):
         clock.tick(6)
 
         # difficulty buttons
-        difficulty_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 180, 50))
-        difficulty_font = pygame.font.Font("font1.ttf", 30)
-        difficulty_text = difficulty_font.render('CHOOSE DIFFICULTY LEVEL', False, WHITE)
-        difficulty_rect = difficulty_text.get_rect(center=difficulty_button.center)
-        screen.blit(difficulty_text, difficulty_rect)
-        level1_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
-        level2_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
-        level3_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
+        text_maker1('CHOOSE DIFFICULTY LEVEL', 30, WHITE, BLACK, 320, 100, 180, 50)
+        text_maker2('EASY', 32, BLACK, (141, 238, 238), 320, 250, 160, 100)
+        text_maker2('NORMAL', 32, BLACK, (30, 144, 255), 320, 350, 160, 100)
+        text_maker2('HARD', 32, BLACK, (141, 238, 238), 320, 450, 160, 100)
+        text_maker2('Quit', 32, BLACK, RED, 320, 550, 160, 100)
 
-        # quit game button
-        quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-
-        # text on buttons
-        font = pygame.font.Font("font2.ttf", 32)
-        font_title = pygame.font.Font("font2.ttf", 60)
-
-        level1_text = font.render('EASY', False, BLACK)
-        level2_text = font.render('NORMAL', False, BLACK)
-        level3_text = font.render('HARD', False, BLACK)
-        level1_rect = level1_text.get_rect(center=level1_button.center)
-        level2_rect = level2_text.get_rect(center=level2_button.center)
-        level3_rect = level3_text.get_rect(center=level3_button.center)
-        screen.blit(level1_text, level1_rect)
-        screen.blit(level2_text, level2_rect)
-        screen.blit(level3_text, level3_rect)
-        quit_text = font.render('Quit', False, BLACK)
-        quit_rect = quit_text.get_rect(center=quit_button.center)
-        screen.blit(quit_text, quit_rect)
         pygame.mouse.set_visible(True)
         pygame.display.flip()
