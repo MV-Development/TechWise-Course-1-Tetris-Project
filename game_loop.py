@@ -50,7 +50,7 @@ def clear_rows(grid, fallen, score):
     elif score == 30:
         score = 300
     elif score == 40:
-        score = 1200    
+        score = 1200
     return score
 
 
@@ -171,6 +171,13 @@ def new_piece():
     return pieces.Piece(5, 0, random.choice(PIECE_NAMES))
 
 
+def instant_drop(tetro, grid):
+    while empty_space(tetro, grid) and tetro.y < len(grid) + 1:
+        tetro.y += 1
+    if not (empty_space(tetro, grid)):
+        tetro.y -= 1
+
+
 def empty_space(tetro, grid):
     valid_grid = [[(col, row) for col in range(10) if grid[row][col] == BLACK] for row in range(20)]
     valid_grid = [col for sublist in valid_grid for col in sublist]
@@ -190,6 +197,7 @@ def get_min_speed(difficulty):
     else:
         return .2
 
+
 def get_max_speed(difficulty):
     if difficulty == 1:
         return .12
@@ -198,9 +206,10 @@ def get_max_speed(difficulty):
     else:
         return .04
 
+
 ##########################################################################################
 # Main Game loop
-def game(timeLimit,difficulty):
+def game(timeLimit, difficulty):
     # change screen color
     screen.fill(BLACK)
 
@@ -233,11 +242,11 @@ def game(timeLimit,difficulty):
         hold_box()
         grid = create_grid(fallen)
         draw_next_piece(next_pieces)
-        fall_interval = (min_speed-max_speed)/timeLimit
+        fall_interval = (min_speed - max_speed) / timeLimit
         gameLimit = hud.create_hud(screen, start_time, timeLimit)
         if minutes != gameLimit:
-           active_fall_speed -= fall_interval
-           minutes = str(gameLimit)
+            active_fall_speed -= fall_interval
+            minutes = str(gameLimit)
         if gameLimit == -1:
             game_over(score)
         display_score(score)
@@ -247,6 +256,8 @@ def game(timeLimit,difficulty):
             hold_display(held)
 
         for event in pygame.event.get():
+            if event.type == pygame.USEREVENT:
+                active_fall_speed = temp
             # space bar quits game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
@@ -272,6 +283,8 @@ def game(timeLimit,difficulty):
                     active_piece.rotation += 1 % len(active_piece.tetro)
                     if not (empty_space(active_piece, grid)):
                         active_piece.rotation -= 1
+                if event.key == pygame.K_RSHIFT:
+                    instant_drop(active_piece, grid)
 
             if event.type == pygame.QUIT:
                 pygame.quit()
