@@ -137,7 +137,6 @@ def color_change(color, direction):
 
 def menu():
     # add menu music
-    # Music From: https://downloads.khinsider.com/game-soundtracks/album/next-tetris-online
     pygame.mixer.init()
     pygame.mixer.music.load('menu_song.mp3')
     pygame.mixer.music.play(-1)
@@ -170,13 +169,13 @@ def menu():
 
         # title game button & text
         title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 160, 100))
-        title_font = pygame.font.SysFont('javanesetext', 100)
+        title_font = pygame.font.Font("font1.ttf", 90)
         title_text = title_font.render('BLOCK', False, default_color)
         title_rect = title_text.get_rect(center=title_button.center)
         screen.blit(title_text, title_rect)
 
         title1_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 180, 160, 100))
-        title1_font = pygame.font.SysFont('javanesetext', 100)
+        title1_font = pygame.font.Font("font1.ttf", 85)
         title1_text = title1_font.render('GAME', False, default_color1)
         title1_rect = title1_text.get_rect(center=title1_button.center)
         screen.blit(title1_text, title1_rect)
@@ -191,7 +190,7 @@ def menu():
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
         # text on buttons
-        font = pygame.font.SysFont('franklingothicmedium', 50)
+        font = pygame.font.Font("font2.ttf", 30)
         start_text = font.render('Start', False, BLACK)
         start_rect = start_text.get_rect(center=start_button.center)
         screen.blit(start_text, start_rect)
@@ -244,8 +243,8 @@ def game_select():
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
         # text on buttons
-        font = pygame.font.SysFont('franklingothicmedium', 28)
-        font_title = pygame.font.SysFont('franklingothicmedium', 60)
+        font = pygame.font.Font("font2.ttf", 15)
+        font_title = pygame.font.Font("font2.ttf", 60)
 
         limit5_text = font.render('5 Min Limit', False, BLACK)
         limit10_text = font.render('10 Min Limit', False, BLACK)
@@ -263,7 +262,6 @@ def game_select():
         pygame.display.flip()
 
 
-#UNFINISHED DIFFICULTY SELECT SCREEN
 def diff_select(timeLimit):
     while True:
         for event in pygame.event.get():
@@ -304,8 +302,8 @@ def diff_select(timeLimit):
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
         # text on buttons
-        font = pygame.font.SysFont('franklingothicmedium', 28)
-        font_title = pygame.font.SysFont('franklingothicmedium', 60)
+        font = pygame.font.Font("font2.ttf", 23)
+        font_title = pygame.font.Font("font2.ttf", 60)
 
         limit5_text = font.render('EASY', False, BLACK)
         limit10_text = font.render('NORMAL', False, BLACK)

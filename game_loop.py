@@ -212,8 +212,6 @@ def get_max_speed(difficulty):
 def game(timeLimit, difficulty):
     # change screen color
     screen.fill(BLACK)
-
-    # Music From: https://downloads.khinsider.com/game-soundtracks/album/mobile-tetris-soundtrack
     pygame.mixer.music.stop()
     pygame.mixer.music.load('game_song.mp3')
     pygame.mixer.music.play(-1)
@@ -258,7 +256,7 @@ def game(timeLimit, difficulty):
         for event in pygame.event.get():
             if event.type == pygame.USEREVENT:
                 active_fall_speed = temp
-            # space bar quits game
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if held is None and not round_hold:
@@ -320,7 +318,7 @@ def game(timeLimit, difficulty):
 # Game Over
 def game_over(score):
     screen.fill(BLACK)
-    font = pygame.font.SysFont('franklingothicmedium', 60)
+    font = pygame.font.Font("font1.ttf", 35)
     game_over_space = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 150, 160, 100))
     game_over_text = font.render('GAME OVER', False, WHITE)
     game_over_rect = game_over_text.get_rect(center=game_over_space.center)
@@ -329,12 +327,13 @@ def game_over(score):
     score_text = font.render(f'FINAL SCORE: {score}', False, WHITE)
     score_rect = score_text.get_rect(center=score_space.center)
     screen.blit(score_text, score_rect)
-    restart_button = pygame.draw.rect(screen, GREEN, pygame.Rect(320, 350, 160, 100))
-    restart_text = font.render('Retry', False, BLACK)
+    font1 = pygame.font.Font("font2.ttf", 30)
+    restart_button = pygame.draw.rect(screen, (191,239,255), pygame.Rect(320, 350, 160, 100))
+    restart_text = font1.render('Retry', False, BLACK)
     restart_rect = restart_text.get_rect(center=restart_button.center)
     screen.blit(restart_text, restart_rect)
     quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-    quit_text = font.render('Quit', False, BLACK)
+    quit_text = font1.render('Quit', False, BLACK)
     quit_rect = quit_text.get_rect(center=quit_button.center)
     screen.blit(quit_text, quit_rect)
 
@@ -355,3 +354,4 @@ def game_over(score):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+
