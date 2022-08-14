@@ -225,7 +225,6 @@ def game(timeLimit, difficulty):
 
     # new_piece()
     draw_lines()
-    # pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
     fallen = {}
     grid = create_grid(fallen)

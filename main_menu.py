@@ -235,6 +235,12 @@ def game_select():
         clock.tick(6)
 
         # time limit buttons
+        time_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 180, 50))
+        time_font = pygame.font.Font("font1.ttf", 40)
+        time_text = time_font.render('CHOOSE TIME LIMIT', False, WHITE)
+        time_rect = time_text.get_rect(center=time_button.center)
+        screen.blit(time_text, time_rect)
+
         limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
         limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
         limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
@@ -246,9 +252,9 @@ def game_select():
         font = pygame.font.Font("font2.ttf", 25)
         font_title = pygame.font.Font("font2.ttf", 60)
 
-        limit5_text = font.render('5 Min Limit', False, BLACK)
-        limit10_text = font.render('10 Min Limit', False, BLACK)
-        limit15_text = font.render('15 Min Limit', False, BLACK)
+        limit5_text = font.render('5 Minutes', False, BLACK)
+        limit10_text = font.render('10 Minutes', False, BLACK)
+        limit15_text = font.render('15 Minutes', False, BLACK)
         limit5_rect = limit5_text.get_rect(center=limit5_button.center)
         limit10_rect = limit10_text.get_rect(center=limit10_button.center)
         limit15_rect = limit15_text.get_rect(center=limit15_button.center)
@@ -293,10 +299,15 @@ def diff_select(timeLimit):
         my_group5.update()
         clock.tick(6)
 
-        # time limit buttons
-        limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
-        limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
-        limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
+        # difficulty buttons
+        difficulty_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 180, 50))
+        difficulty_font = pygame.font.Font("font1.ttf", 30)
+        difficulty_text = difficulty_font.render('CHOOSE DIFFICULTY LEVEL', False, WHITE)
+        difficulty_rect = difficulty_text.get_rect(center=difficulty_button.center)
+        screen.blit(difficulty_text, difficulty_rect)
+        level1_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
+        level2_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
+        level3_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
 
         # quit game button
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
@@ -305,15 +316,15 @@ def diff_select(timeLimit):
         font = pygame.font.Font("font2.ttf", 32)
         font_title = pygame.font.Font("font2.ttf", 60)
 
-        limit5_text = font.render('EASY', False, BLACK)
-        limit10_text = font.render('NORMAL', False, BLACK)
-        limit15_text = font.render('HARD', False, BLACK)
-        limit5_rect = limit5_text.get_rect(center=limit5_button.center)
-        limit10_rect = limit10_text.get_rect(center=limit10_button.center)
-        limit15_rect = limit15_text.get_rect(center=limit15_button.center)
-        screen.blit(limit5_text, limit5_rect)
-        screen.blit(limit10_text, limit10_rect)
-        screen.blit(limit15_text, limit15_rect)
+        level1_text = font.render('EASY', False, BLACK)
+        level2_text = font.render('NORMAL', False, BLACK)
+        level3_text = font.render('HARD', False, BLACK)
+        level1_rect = level1_text.get_rect(center=level1_button.center)
+        level2_rect = level2_text.get_rect(center=level2_button.center)
+        level3_rect = level3_text.get_rect(center=level3_button.center)
+        screen.blit(level1_text, level1_rect)
+        screen.blit(level2_text, level2_rect)
+        screen.blit(level3_text, level3_rect)
         quit_text = font.render('Quit', False, BLACK)
         quit_rect = quit_text.get_rect(center=quit_button.center)
         screen.blit(quit_text, quit_rect)
