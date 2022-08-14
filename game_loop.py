@@ -43,6 +43,14 @@ def clear_rows(grid, fallen, score):
                     if (col, x - 1) in fallen:
                         fallen[(col, x)] = fallen[(col, x - 1)]
                         del fallen[col, x - 1]
+    if score == 10:
+        score = 40
+    elif score == 20:
+        score = 100
+    elif score == 30:
+        score = 300
+    elif score == 40:
+        score = 1200    
     return score
 
 
