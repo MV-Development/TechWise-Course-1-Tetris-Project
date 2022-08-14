@@ -137,9 +137,9 @@ def color_change(color, direction):
 
 def menu():
     # add menu music
-    pygame.mixer.init()
-    pygame.mixer.music.load('menu_song.mp3')
-    pygame.mixer.music.play(-1)
+    #pygame.mixer.init()
+    #pygame.mixer.music.load('menu_song.mp3')
+    #pygame.mixer.music.play(-1)
 
     while True:
         for event in pygame.event.get():
@@ -190,7 +190,7 @@ def menu():
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
         # text on buttons
-        font = pygame.font.Font("font2.ttf", 30)
+        font = pygame.font.Font("font2.ttf", 50)
         start_text = font.render('Start', False, BLACK)
         start_rect = start_text.get_rect(center=start_button.center)
         screen.blit(start_text, start_rect)
@@ -243,7 +243,7 @@ def game_select():
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
         # text on buttons
-        font = pygame.font.Font("font2.ttf", 15)
+        font = pygame.font.Font("font2.ttf", 25)
         font_title = pygame.font.Font("font2.ttf", 60)
 
         limit5_text = font.render('5 Min Limit', False, BLACK)
@@ -302,7 +302,7 @@ def diff_select(timeLimit):
         quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
 
         # text on buttons
-        font = pygame.font.Font("font2.ttf", 23)
+        font = pygame.font.Font("font2.ttf", 32)
         font_title = pygame.font.Font("font2.ttf", 60)
 
         limit5_text = font.render('EASY', False, BLACK)
