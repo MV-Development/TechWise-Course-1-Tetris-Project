@@ -216,6 +216,7 @@ def game(timeLimit, difficulty):
     pygame.mixer.music.load('game_song.mp3')
     pygame.mixer.music.play(-1)
 
+    # quit button
     quit_button = pygame.draw.rect(screen, RED, pygame.Rect(600, 720, 150, 60))
     font = pygame.font.Font("font2.ttf", 50)
     quit_text = font.render('Quit', False, BLACK)

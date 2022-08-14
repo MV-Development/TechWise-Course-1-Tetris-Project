@@ -7,9 +7,8 @@ Images: Tetris by Emily L from <a href="https://thenounproject.com/browse/icons/
 
 Music: https://downloads.khinsider.com/
 
-Font: https://all-free-download.com/font/
+Fonts: https://all-free-download.com/font/
 # Tetris Project
-This is Danny's ReadMe
 
 
 ## Getting started

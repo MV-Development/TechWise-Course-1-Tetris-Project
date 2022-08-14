@@ -137,9 +137,9 @@ def color_change(color, direction):
 
 def menu():
     # add menu music
-    #pygame.mixer.init()
-    #pygame.mixer.music.load('menu_song.mp3')
-    #pygame.mixer.music.play(-1)
+    pygame.mixer.init()
+    pygame.mixer.music.load('menu_song.mp3')
+    pygame.mixer.music.play(-1)
 
     while True:
         for event in pygame.event.get():
