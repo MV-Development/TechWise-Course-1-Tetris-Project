@@ -78,7 +78,8 @@ def draw_shape(piece):
 def new_piece():
     return pieces.Piece(5, 0, random.choice(PIECE_NAMES))
 
-    # def empty_space(tetro, grid):
+
+def empty_space(tetro, grid):
     valid_grid = [[(col, row) for col in range(10) if grid[row][col] == BLACK] for row in range(20)]
     valid_grid = [col for sublist in valid_grid for col in sublist]
     new_grid = draw_shape(tetro)
