@@ -32,26 +32,27 @@ PIECE_NAMES = pieces.PIECE_NAMES
 
 def clear_rows(grid, fallen, score):
     i = 0
+    add_score = 0
     for row in range(len(grid)):
         i += 1
         for col in range(len(grid[row])):
             lowest = min(fallen, key=lambda t: t[1])
             if BLACK not in grid[row]:
                 del fallen[col, row]
-                score += 1
+                add_score += 1
                 for x in range(i, lowest[1], -1):
                     if (col, x - 1) in fallen:
                         fallen[(col, x)] = fallen[(col, x - 1)]
                         del fallen[col, x - 1]
-    if score == 10:
-        score = 40
-    elif score == 20:
-        score = 100
-    elif score == 30:
-        score = 300
-    elif score == 40:
-        score = 1200
-    return score
+    if add_score == 10:
+        add_score = 40
+    elif add_score == 20:
+        add_score = 100
+    elif add_score == 30:
+        add_score = 300
+    elif add_score == 40:
+        add_score = 1200
+    return score + add_score
 
 
 def draw_next_piece(pieces):
