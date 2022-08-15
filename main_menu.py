@@ -122,11 +122,29 @@ my_sprite5 = ZShapeSprite()
 my_group5 = pygame.sprite.Group(my_sprite5)
 clock = pygame.time.Clock()
 
+
+def text_maker1(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font1.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
+
+def text_maker2(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font2.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
+
 color_speed = 1
 color_direction = [-1, 1, -1]
 default_color = [140, 120, 230]
 color_direction1 = [-1, 1, 1]
 default_color1 = [120, 140, 240]
+
 
 def color_change(color, direction):
     for i in range(len(color)):
@@ -135,9 +153,9 @@ def color_change(color, direction):
         if color[i] >= 255 or color[i] <= 0:
             direction[i] *= -1
 
+
 def menu():
     # add menu music
-    # Music From: https://downloads.khinsider.com/game-soundtracks/album/next-tetris-online
     pygame.mixer.init()
     pygame.mixer.music.load('menu_song.mp3')
     pygame.mixer.music.play(-1)
@@ -169,35 +187,16 @@ def menu():
         clock.tick(6)
 
         # title game button & text
-        title_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 100, 160, 100))
-        title_font = pygame.font.SysFont('javanesetext', 100)
-        title_text = title_font.render('BLOCK', False, default_color)
-        title_rect = title_text.get_rect(center=title_button.center)
-        screen.blit(title_text, title_rect)
-
-        title1_button = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 180, 160, 100))
-        title1_font = pygame.font.SysFont('javanesetext', 100)
-        title1_text = title1_font.render('GAME', False, default_color1)
-        title1_rect = title1_text.get_rect(center=title1_button.center)
-        screen.blit(title1_text, title1_rect)
+        text_maker1('BLOCK', 90, default_color, BLACK, 320, 100, 160, 100)
+        text_maker1('GAME', 85, default_color1, BLACK, 320, 180, 160, 100)
 
         color_change(default_color, color_direction)
         color_change(default_color1, color_direction1)
 
         # start game button
-        start_button = pygame.draw.rect(screen, (191,239,255), pygame.Rect(320, 350, 160, 100))
-
+        text_maker2('Start', 50, BLACK, (191,239,255), 320, 350, 160, 100)
         # quit game button
-        quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-
-        # text on buttons
-        font = pygame.font.SysFont('franklingothicmedium', 50)
-        start_text = font.render('Start', False, BLACK)
-        start_rect = start_text.get_rect(center=start_button.center)
-        screen.blit(start_text, start_rect)
-        quit_text = font.render('Quit', False, BLACK)
-        quit_rect = quit_text.get_rect(center=quit_button.center)
-        screen.blit(quit_text, quit_rect)
+        text_maker2('Quit', 50, BLACK, RED, 320, 550, 160, 100)
 
         # add everything to screen
         pygame.mouse.set_visible(True)
@@ -236,34 +235,16 @@ def game_select():
         clock.tick(6)
 
         # time limit buttons
-        limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
-        limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
-        limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
+        text_maker1('CHOOSE TIME LIMIT', 40, WHITE, BLACK, 320, 100, 180, 50)
+        text_maker2('5 Minutes', 25, BLACK, (141, 238, 238), 320, 250, 160, 100)
+        text_maker2('10 Minutes', 25, BLACK, (30, 144, 255), 320, 350, 160, 100)
+        text_maker2('15 Minutes', 25, BLACK, (141, 238, 238), 320, 450, 160, 100)
+        text_maker2('Quit', 25, BLACK, RED, 320, 550, 160, 100)
 
-        # quit game button
-        quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-
-        # text on buttons
-        font = pygame.font.SysFont('franklingothicmedium', 28)
-        font_title = pygame.font.SysFont('franklingothicmedium', 60)
-
-        limit5_text = font.render('5 Min Limit', False, BLACK)
-        limit10_text = font.render('10 Min Limit', False, BLACK)
-        limit15_text = font.render('15 Min Limit', False, BLACK)
-        limit5_rect = limit5_text.get_rect(center=limit5_button.center)
-        limit10_rect = limit10_text.get_rect(center=limit10_button.center)
-        limit15_rect = limit15_text.get_rect(center=limit15_button.center)
-        screen.blit(limit5_text, limit5_rect)
-        screen.blit(limit10_text, limit10_rect)
-        screen.blit(limit15_text, limit15_rect)
-        quit_text = font.render('Quit', False, BLACK)
-        quit_rect = quit_text.get_rect(center=quit_button.center)
-        screen.blit(quit_text, quit_rect)
         pygame.mouse.set_visible(True)
         pygame.display.flip()
 
 
-#UNFINISHED DIFFICULTY SELECT SCREEN
 def diff_select(timeLimit):
     while True:
         for event in pygame.event.get():
@@ -295,29 +276,12 @@ def diff_select(timeLimit):
         my_group5.update()
         clock.tick(6)
 
-        # time limit buttons
-        limit5_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 250, 160, 100))
-        limit10_button = pygame.draw.rect(screen, (30, 144, 255), pygame.Rect(320, 350, 160, 100))
-        limit15_button = pygame.draw.rect(screen, (141, 238, 238), pygame.Rect(320, 450, 160, 100))
+        # difficulty buttons
+        text_maker1('CHOOSE DIFFICULTY LEVEL', 30, WHITE, BLACK, 320, 100, 180, 50)
+        text_maker2('EASY', 32, BLACK, (141, 238, 238), 320, 250, 160, 100)
+        text_maker2('NORMAL', 32, BLACK, (30, 144, 255), 320, 350, 160, 100)
+        text_maker2('HARD', 32, BLACK, (141, 238, 238), 320, 450, 160, 100)
+        text_maker2('Quit', 32, BLACK, RED, 320, 550, 160, 100)
 
-        # quit game button
-        quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-
-        # text on buttons
-        font = pygame.font.SysFont('franklingothicmedium', 28)
-        font_title = pygame.font.SysFont('franklingothicmedium', 60)
-
-        limit5_text = font.render('EASY', False, BLACK)
-        limit10_text = font.render('NORMAL', False, BLACK)
-        limit15_text = font.render('HARD', False, BLACK)
-        limit5_rect = limit5_text.get_rect(center=limit5_button.center)
-        limit10_rect = limit10_text.get_rect(center=limit10_button.center)
-        limit15_rect = limit15_text.get_rect(center=limit15_button.center)
-        screen.blit(limit5_text, limit5_rect)
-        screen.blit(limit10_text, limit10_rect)
-        screen.blit(limit15_text, limit15_rect)
-        quit_text = font.render('Quit', False, BLACK)
-        quit_rect = quit_text.get_rect(center=quit_button.center)
-        screen.blit(quit_text, quit_rect)
         pygame.mouse.set_visible(True)
         pygame.display.flip()

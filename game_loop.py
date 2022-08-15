@@ -32,35 +32,34 @@ PIECE_NAMES = pieces.PIECE_NAMES
 
 def clear_rows(grid, fallen, score):
     i = 0
-    add_score = 0
     for row in range(len(grid)):
         i += 1
         for col in range(len(grid[row])):
             lowest = min(fallen, key=lambda t: t[1])
             if BLACK not in grid[row]:
                 del fallen[col, row]
-                add_score += 1
+                score += 1
                 for x in range(i, lowest[1], -1):
                     if (col, x - 1) in fallen:
                         fallen[(col, x)] = fallen[(col, x - 1)]
                         del fallen[col, x - 1]
-    if add_score == 10:
-        add_score += 30
-    elif add_score == 20:
-        add_score += 80
-    elif add_score == 30:
-        add_score += 270
-    elif add_score == 40:
-        add_score += 1160
-    return score + add_score
+    if score == 10:
+        score = 40
+    elif score == 20:
+        score = 100
+    elif score == 30:
+        score = 300
+    elif score == 40:
+        score = 1200
+    return score
 
 
 def draw_next_piece(pieces):
     pygame.draw.rect(screen, BLACK, (600, 130, 150, 575))
     pygame.draw.rect(screen, WHITE, (600, 130, 150, 575), 3)
-    font = pygame.font.SysFont('franklingothicmedium', 30)
+    font = pygame.font.Font('font2.ttf', 25)
     next_text = font.render('Next Pieces', False, WHITE)
-    screen.blit(next_text, (601, 95, 30, 30))
+    screen.blit(next_text, (608, 95, 30, 30))
     i = -130
     for n in range(len(pieces)):
         shape = pieces[n].tetro[pieces[n].rotation % len(pieces[n].tetro)]
@@ -113,9 +112,9 @@ def hold_display(held):
 def hold_box():
     pygame.draw.rect(screen, BLACK, (50, 130, 150, 150))
     pygame.draw.rect(screen, WHITE, (50, 130, 150, 150), 3)
-    font = pygame.font.SysFont('franklingothicmedium', 30)
+    font = pygame.font.Font('font2.ttf', 28)
     held_text = font.render('Held', False, WHITE)
-    screen.blit(held_text, (90, 95, 30, 30))
+    screen.blit(held_text, (95, 93, 30, 30))
 
 
 ##########################################################################################
@@ -210,17 +209,34 @@ def get_max_speed(difficulty):
 
 ##########################################################################################
 # Main Game loop
+
+def text_maker1(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font1.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
+
+def text_maker2(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(screen, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font2.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
 def game(timeLimit, difficulty):
     # change screen color
     screen.fill(BLACK)
-
-    # Music From: https://downloads.khinsider.com/game-soundtracks/album/mobile-tetris-soundtrack
     pygame.mixer.music.stop()
     pygame.mixer.music.load('game_song.mp3')
     pygame.mixer.music.play(-1)
+
+    # quit button
+    text_maker2('Quit', 50, BLACK, RED, 600, 720, 150, 60)
+
     # new_piece()
     draw_lines()
-    # pygame.mouse.set_visible(False)
     start_time = pygame.time.get_ticks()
     fallen = {}
     grid = create_grid(fallen)
@@ -257,7 +273,14 @@ def game(timeLimit, difficulty):
             hold_display(held)
 
         for event in pygame.event.get():
-            # space bar quits game
+            if event.type == pygame.USEREVENT:
+                active_fall_speed = temp
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # get mouse position
+                mouse = pygame.mouse.get_pos()
+                if 600 <= mouse[0] <= 750 and 720 <= mouse[1] <= 820:
+                    pygame.quit()
+                    sys.exit(0)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if held is None and not round_hold:
@@ -266,9 +289,6 @@ def game(timeLimit, difficulty):
                     elif not round_hold:
                         held, active_piece = swap_hold(held, active_piece)
                         round_hold = True
-                if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit(0)
                 if event.key == pygame.K_RIGHT:
                     active_piece.x += 1
                     if not (empty_space(active_piece, grid)):
@@ -322,23 +342,11 @@ def game(timeLimit, difficulty):
 # Game Over
 def game_over(score):
     screen.fill(BLACK)
-    font = pygame.font.SysFont('franklingothicmedium', 60)
-    game_over_space = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 150, 160, 100))
-    game_over_text = font.render('GAME OVER', False, WHITE)
-    game_over_rect = game_over_text.get_rect(center=game_over_space.center)
-    screen.blit(game_over_text, game_over_rect)
-    score_space = pygame.draw.rect(screen, BLACK, pygame.Rect(320, 250, 160, 100))
-    score_text = font.render(f'FINAL SCORE: {score}', False, WHITE)
-    score_rect = score_text.get_rect(center=score_space.center)
-    screen.blit(score_text, score_rect)
-    restart_button = pygame.draw.rect(screen, GREEN, pygame.Rect(320, 350, 160, 100))
-    restart_text = font.render('Retry', False, BLACK)
-    restart_rect = restart_text.get_rect(center=restart_button.center)
-    screen.blit(restart_text, restart_rect)
-    quit_button = pygame.draw.rect(screen, RED, pygame.Rect(320, 550, 160, 100))
-    quit_text = font.render('Quit', False, BLACK)
-    quit_rect = quit_text.get_rect(center=quit_button.center)
-    screen.blit(quit_text, quit_rect)
+    text_maker1('GAME OVER', 35, WHITE, BLACK, 320, 150, 160, 100)
+    text_maker1(f'FINAL SCORE: {score}', 35, WHITE, BLACK, 320, 250, 160, 100)
+
+    text_maker2('Retry', 50, BLACK, (191,239,255), 320, 350, 160, 100)
+    text_maker2('Quit', 50, BLACK, RED, 320, 550, 160, 100)
 
     pygame.mouse.set_visible(True)
     pygame.display.flip()
@@ -357,3 +365,4 @@ def game_over(score):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
+
