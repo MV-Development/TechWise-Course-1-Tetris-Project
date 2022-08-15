@@ -273,8 +273,6 @@ def game(timeLimit, difficulty):
             hold_display(held)
 
         for event in pygame.event.get():
-            if event.type == pygame.USEREVENT:
-                active_fall_speed = temp
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
