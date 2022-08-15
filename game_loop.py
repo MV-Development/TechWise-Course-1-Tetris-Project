@@ -32,26 +32,27 @@ PIECE_NAMES = pieces.PIECE_NAMES
 
 def clear_rows(grid, fallen, score):
     i = 0
+    add_score = 0
     for row in range(len(grid)):
         i += 1
         for col in range(len(grid[row])):
             lowest = min(fallen, key=lambda t: t[1])
             if BLACK not in grid[row]:
                 del fallen[col, row]
-                score += 1
+                add_score += 1
                 for x in range(i, lowest[1], -1):
                     if (col, x - 1) in fallen:
                         fallen[(col, x)] = fallen[(col, x - 1)]
                         del fallen[col, x - 1]
-    if score == 10:
-        score = 40
-    elif score == 20:
-        score = 100
-    elif score == 30:
-        score = 300
-    elif score == 40:
-        score = 1200
-    return score
+    if add_score == 10:
+        add_score += 30
+    elif add_score == 20:
+        add_score += 80
+    elif add_score == 30:
+        add_score += 270
+    elif add_score == 40:
+        add_score += 1160
+    return score + add_score
 
 
 def draw_next_piece(pieces):
@@ -256,8 +257,6 @@ def game(timeLimit, difficulty):
             hold_display(held)
 
         for event in pygame.event.get():
-            if event.type == pygame.USEREVENT:
-                active_fall_speed = temp
             # space bar quits game
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
@@ -267,6 +266,9 @@ def game(timeLimit, difficulty):
                     elif not round_hold:
                         held, active_piece = swap_hold(held, active_piece)
                         round_hold = True
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit(0)
                 if event.key == pygame.K_RIGHT:
                     active_piece.x += 1
                     if not (empty_space(active_piece, grid)):
