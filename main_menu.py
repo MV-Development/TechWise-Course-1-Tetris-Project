@@ -14,6 +14,7 @@ BLOCK_SIZE = 30
 w_width = 800
 w_height = 800
 
+
 class LShapeSprite(pygame.sprite.Sprite):
     def __init__(self):
         super(LShapeSprite, self).__init__()
@@ -37,6 +38,7 @@ class LShapeSprite(pygame.sprite.Sprite):
         if self.index >= len(self.images):
             self.index = 0
         self.image = self.images[self.index]
+
 
 class ZShapeSprite(pygame.sprite.Sprite):
     def __init__(self):
@@ -62,6 +64,7 @@ class ZShapeSprite(pygame.sprite.Sprite):
             self.index = 0
         self.image = self.images[self.index]
 
+
 class TShapeSprite(pygame.sprite.Sprite):
     def __init__(self):
         super(TShapeSprite, self).__init__()
@@ -84,6 +87,7 @@ class TShapeSprite(pygame.sprite.Sprite):
         if self.index >= len(self.images):
             self.index = 0
         self.image = self.images[self.index]
+
 
 class OShapeSprite(pygame.sprite.Sprite):
     def __init__(self):
@@ -194,7 +198,7 @@ def menu():
         color_change(default_color1, color_direction1)
 
         # start game button
-        text_maker2('Start', 50, BLACK, (191,239,255), 320, 350, 160, 100)
+        text_maker2('Start', 50, BLACK, (191, 239, 255), 320, 350, 160, 100)
         # quit game button
         text_maker2('Quit', 50, BLACK, RED, 320, 550, 160, 100)
 
@@ -253,11 +257,11 @@ def diff_select(timeLimit):
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
                 if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    game_loop.game(timeLimit,2)
+                    game_loop.game(timeLimit, 2)
                 elif 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
-                    game_loop.game(timeLimit,1)
+                    game_loop.game(timeLimit, 1)
                 elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 550:
-                    game_loop.game(timeLimit,3)
+                    game_loop.game(timeLimit, 3)
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
                     pygame.quit()
                     sys.exit(0)

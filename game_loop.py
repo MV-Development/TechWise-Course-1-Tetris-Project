@@ -226,6 +226,7 @@ def text_maker2(text, size, text_color, rect_color, left, top, width, height):
     text_rect = text_surface.get_rect(center=button.center)
     screen.blit(text_surface, text_rect)
 
+
 def game(timeLimit, difficulty):
     # change screen color
     screen.fill(BLACK)
@@ -344,7 +345,7 @@ def game_over(score):
     text_maker1('GAME OVER', 35, WHITE, BLACK, 320, 150, 160, 100)
     text_maker1(f'FINAL SCORE: {score}', 35, WHITE, BLACK, 320, 250, 160, 100)
 
-    text_maker2('Retry', 50, BLACK, (191,239,255), 320, 350, 160, 100)
+    text_maker2('Retry', 50, BLACK, (191, 239, 255), 320, 350, 160, 100)
     text_maker2('Quit', 50, BLACK, RED, 320, 550, 160, 100)
 
     pygame.mouse.set_visible(True)
@@ -364,4 +365,3 @@ def game_over(score):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
-
