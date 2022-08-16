@@ -17,19 +17,13 @@ SIZE = block_game.SIZE
 tetris_button = interface.MenuButton(SCREEN, interface.BLACK, int(SIZE * 0.4), int(SIZE * 0.15), SIZE, 'BLOCK GAME',
                                      interface.WHITE, 'javanesetext', int(SIZE * 0.125))
 tetris_button.draw_button()
-
 font = pygame.font.SysFont('franklingothicmedium', 50)
-# start game button
 start_button = interface.MenuButton(SCREEN, interface.GREEN, int(SIZE * 0.4), int(SIZE * 0.4375), SIZE, 'START',
                                     interface.WHITE, 'franklingothicmedium', int(SIZE * 0.0625))
 start_button.draw_button()
-
-# quit game button
 quit_button = interface.MenuButton(SCREEN, interface.RED, int(SIZE * 0.4), int(SIZE * 0.6875), SIZE, 'QUIT',
                                    interface.BLACK, 'franklingothicmedium', int(SIZE * 0.0625))
 quit_button.draw_button()
-
-# Update Display
 pygame.display.flip()
 
 ########################################################################################################################
@@ -38,12 +32,9 @@ while True:
     for event in pygame.event.get():
         # on event click
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print("mouse clicked", pygame.mouse.get_pos())
             if start_button.is_clicked():
-                print("start_button clicked")
                 select_screen.difficulty_select()
             if quit_button.is_clicked():
-                print("quit_button clicked")
                 pygame.quit()
                 sys.exit(0)
         if event.type == pygame.QUIT:
