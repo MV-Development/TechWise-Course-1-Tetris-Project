@@ -167,7 +167,7 @@ def game():
         for event in pygame.event.get():
             # space bar quits game
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit(0)
                 if event.key == pygame.K_RIGHT:
