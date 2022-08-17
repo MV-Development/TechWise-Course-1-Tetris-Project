@@ -7,7 +7,6 @@ import hud
 import pieces
 import main_menu
 from collections import deque
-import pickle
 
 ##########################################################################################
 # Global Variables
@@ -28,14 +27,63 @@ pygame.display.set_icon(program_icon)
 
 ##########################################################################################
 # High Scores
+with open('scores.txt', 'r') as hs:
+    scores = hs.readlines()
+    scores = [s.rstrip() for s in scores]
+    hs.close()
 
+
+def scoring(time, difficulty, score):
+    print(scores)
+    i = 0
+    if time == 5 and difficulty == 1 and score > int(scores[0]):
+        scores[0] = str(score)
+    elif time == 5 and difficulty == 2 and score > int(scores[1]):
+        scores[1] = str(score)
+    elif time == 5 and difficulty == 3 and score > int(scores[2]):
+        scores[2] = str(score)
+    elif time == 10 and difficulty == 1 and score > int(scores[3]):
+        scores[3] = str(score)
+    elif time == 10 and difficulty == 2 and score > int(scores[4]):
+        scores[4] = str(score)
+    elif time == 10 and difficulty == 3 and score > int(scores[5]):
+        scores[5] = str(score)
+    elif time == 15 and difficulty == 1 and score > int(scores[6]):
+        scores[6] = str(score)
+    elif time == 15 and difficulty == 2 and score > int(scores[7]):
+        scores[7] = str(score)
+    elif time == 15 and difficulty == 3 and score > int(scores[8]):
+        scores[8] = str(score)
+
+    with open('scores.txt', 'w') as hs:
+        for line in scores:
+            hs.write(f'{scores[i]}\n')
+            i += 1
+    print(scores)
+    hs.close()
+
+
+def display_high_score(time):
+    if time == 5:
+        main_menu.text_maker3(f'HIGH SCORES: ', 10, WHITE, 400, 165)
+        main_menu.text_maker3(f'EASY - {scores[0]}', 10, WHITE, 400, 180)
+        main_menu.text_maker3(f'MEDIUM - {scores[1]}', 10, WHITE, 400, 195)
+        main_menu.text_maker3(f'HARD - {scores[2]}', 10, WHITE, 400, 210)
+    elif time == 10:
+        main_menu.text_maker3(f'HIGH SCORES: ', 10, WHITE, 400, 165)
+        main_menu.text_maker3(f'EASY - {scores[3]}', 10, WHITE, 400, 180)
+        main_menu.text_maker3(f'MEDIUM - {scores[4]}', 10, WHITE, 400, 195)
+        main_menu.text_maker3(f'HARD - {scores[5]}', 10, WHITE, 400, 210)
+    elif time == 15:
+        main_menu.text_maker3(f'HIGH SCORES: ', 10, WHITE, 400, 165)
+        main_menu.text_maker3(f'EASY - {scores[6]}', 10, WHITE, 400, 180)
+        main_menu.text_maker3(f'MEDIUM - {scores[7]}', 10, WHITE, 400, 195)
+        main_menu.text_maker3(f'HARD - {scores[8]}', 10, WHITE, 400, 210)
 
 
 # Source of Pieces
 PIECE_NAMES = pieces.PIECE_NAMES
 
-def scoring(time_limit, difficulty):
-    scores = {}
 
 def clear_rows(grid, fallen, score):
     i = 0
@@ -341,7 +389,7 @@ def game(timeLimit, difficulty):
             change_piece = False
             score = clear_rows(grid, fallen, score)
         if lose_game(fallen):
-            scoring(timeLimit, difficulty)
+            scoring(timeLimit, difficulty, score)
             game_over(score)
         update_grid(grid)
 

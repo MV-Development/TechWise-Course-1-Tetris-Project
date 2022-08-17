@@ -15,12 +15,12 @@ BLOCK_SIZE = 30
 w_width = 800
 w_height = 800
 
-
 try:
     with open('score.dat', 'rb') as file:
         score = pickle.load(file)
 except:
     score = 0
+
 
 class LShapeSprite(pygame.sprite.Sprite):
     def __init__(self):
@@ -147,6 +147,14 @@ def text_maker2(text, size, text_color, rect_color, left, top, width, height):
     font = pygame.font.Font("font2.ttf", size)
     text_surface = font.render(text, False, text_color)
     text_rect = text_surface.get_rect(center=button.center)
+    screen.blit(text_surface, text_rect)
+
+
+def text_maker3(text, size, text_color, x, y):
+    font = pygame.font.Font("font1.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect()
+    text_rect.center = (x, y)
     screen.blit(text_surface, text_rect)
 
 
@@ -288,6 +296,7 @@ def diff_select(timeLimit):
         clock.tick(6)
 
         # difficulty buttons
+        game_loop.display_high_score(timeLimit)
         text_maker1('CHOOSE DIFFICULTY LEVEL', 30, WHITE, BLACK, 320, 100, 180, 50)
         text_maker2('EASY', 32, BLACK, (141, 238, 238), 320, 250, 160, 100)
         text_maker2('NORMAL', 32, BLACK, (30, 144, 255), 320, 350, 160, 100)
