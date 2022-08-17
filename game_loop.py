@@ -6,6 +6,7 @@ import sys
 import hud
 import pieces
 import main_menu
+import time
 from collections import deque
 
 ##########################################################################################
@@ -186,6 +187,12 @@ def draw_lines():  # Uses pygame.draw.line function to draw the gridlines on the
         pygame.draw.line(screen, WHITE, (x, 100), (x, w_width - 100))
         x += BLOCK_SIZE
 
+    text_maker2('Press Z to hold', 15, WHITE, BLACK, 115, 370, 10, 20)
+    text_maker2('Press X or Space to drop', 15, WHITE, BLACK, 115, 400, 10, 20)
+    text_maker2('Press C to pause', 15, WHITE, BLACK, 115, 430, 10, 20)
+    text_maker2('Press up to rotate', 15, WHITE, BLACK, 115, 460, 10, 20)
+    text_maker2('Press down to move faster', 15, WHITE, BLACK, 115, 490, 10, 20)
+    text_maker2('Press M to mute', 15, WHITE, BLACK, 115, 520, 10, 20)
 
 def update_grid(grid):
     x = 221
@@ -262,7 +269,13 @@ def get_max_speed(difficulty):
     else:
         return .04
 
-
+def pause_screen():
+    screen.fill(BLACK)
+    text_maker1('Paused', 60, WHITE, BLACK, 360, 300, 60, 60)
+    text_maker1('Press \'C\' to continue ', 20, WHITE, BLACK, 380, 360, 20, 20)
+    text_maker1('or \'esc\' to exit', 20, WHITE, BLACK, 380, 380, 20, 20)
+    pygame.display.update()
+    screen.fill(BLACK)
 ##########################################################################################
 # Main Game loop
 
@@ -291,7 +304,7 @@ def game(timeLimit, difficulty):
 
     # quit button
     text_maker2('Quit', 50, BLACK, RED, 600, 720, 150, 60)
-
+    muted = False
     # new_piece()
     draw_lines()
     start_time = pygame.time.get_ticks()
@@ -310,6 +323,7 @@ def game(timeLimit, difficulty):
     next_pieces = deque(next_pieces)
     held = None
     round_hold = False
+    paused = False
     for i in range(4):
         next_pieces.append(new_piece())
     while True:
@@ -317,15 +331,18 @@ def game(timeLimit, difficulty):
         grid = create_grid(fallen)
         draw_next_piece(next_pieces)
         fall_interval = (min_speed - max_speed) / timeLimit
+
         gameLimit = hud.create_hud(screen, start_time, timeLimit)
         if minutes != gameLimit:
             active_fall_speed -= fall_interval
             minutes = str(gameLimit)
         if gameLimit == -1:
             game_over(score)
+
         display_score(score)
-        clock.tick(30)
-        active_time += clock.get_rawtime()
+        clock.tick(60)
+        if not paused:
+            active_time += clock.get_rawtime()
         if held:
             hold_display(held)
 
@@ -337,37 +354,54 @@ def game(timeLimit, difficulty):
                     pygame.quit()
                     sys.exit(0)
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_z:
+                if event.key == pygame.K_m:
+                    if not muted:
+                        pygame.mixer.music.set_volume(0)
+                        muted = True
+                    else:
+                        pygame.mixer.music.set_volume(1)
+                        muted = False
+                if event.key == pygame.K_z and not paused:
                     if held is None and not round_hold:
                         held, active_piece, next_pieces = hold(active_piece, next_pieces)
                         round_hold = True
                     elif not round_hold:
                         held, active_piece = swap_hold(held, active_piece)
                         round_hold = True
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_c:
+                    if not paused:
+                        paused = True
+                        pause_time = pygame.time.get_ticks()
+                    else:
+                        start_time = pygame.time.get_ticks() - (pause_time - start_time)
+                        paused = False
+
+                if event.key == pygame.K_RIGHT and not paused:
                     active_piece.x += 1
                     if not (empty_space(active_piece, grid)):
                         active_piece.x -= 1
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and not paused:
                     active_piece.x -= 1
                     if not (empty_space(active_piece, grid)):
                         active_piece.x += 1
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN and not paused:
                     active_piece.y += 1
                     if not (empty_space(active_piece, grid)):
                         active_piece.y -= 1
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP and not paused:
                     active_piece.rotation += 1 % len(active_piece.tetro)
                     if not (empty_space(active_piece, grid)):
                         active_piece.rotation -= 1
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE or event.key == pygame.K_x and not paused:
                     instant_drop(active_piece, grid)
-
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit(0)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
 
-        if active_time / 1000 >= active_fall_speed:
+        if active_time / 1000 >= active_fall_speed and not paused:
             active_time = 0
             active_piece.y += 1
             if not (empty_space(active_piece, grid)) and active_piece.y > 0:
@@ -391,7 +425,12 @@ def game(timeLimit, difficulty):
         if lose_game(fallen):
             scoring(timeLimit, difficulty, score)
             game_over(score)
-        update_grid(grid)
+        if paused:
+            pause_screen()
+        else:
+            draw_lines()
+            update_grid(grid)
+
 
 
 ##########################################################################################
