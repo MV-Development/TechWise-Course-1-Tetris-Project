@@ -7,6 +7,7 @@ import hud
 import pieces
 import main_menu
 from collections import deque
+import cPickle
 
 ##########################################################################################
 # Global Variables
@@ -26,9 +27,16 @@ program_icon = pygame.image.load('icon.png')
 pygame.display.set_icon(program_icon)
 
 ##########################################################################################
+# High Scores
+d = shelve.open('highscores.txt')
+
+
+
 # Source of Pieces
 PIECE_NAMES = pieces.PIECE_NAMES
 
+def scoring(time_limit, difficulty):
+    scores = {}
 
 def clear_rows(grid, fallen, score):
     i = 0
@@ -255,6 +263,7 @@ def game(timeLimit, difficulty):
     next_pieces = deque(next_pieces)
     held = None
     round_hold = False
+    print(scores)
     for i in range(4):
         next_pieces.append(new_piece())
     while True:
@@ -282,7 +291,7 @@ def game(timeLimit, difficulty):
                     pygame.quit()
                     sys.exit(0)
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_z:
                     if held is None and not round_hold:
                         held, active_piece, next_pieces = hold(active_piece, next_pieces)
                         round_hold = True
@@ -305,7 +314,7 @@ def game(timeLimit, difficulty):
                     active_piece.rotation += 1 % len(active_piece.tetro)
                     if not (empty_space(active_piece, grid)):
                         active_piece.rotation -= 1
-                if event.key == pygame.K_RSHIFT:
+                if event.key == pygame.K_SPACE:
                     instant_drop(active_piece, grid)
 
             if event.type == pygame.QUIT:
@@ -334,6 +343,7 @@ def game(timeLimit, difficulty):
             change_piece = False
             score = clear_rows(grid, fallen, score)
         if lose_game(fallen):
+            scoring(timeLimit, difficulty)
             game_over(score)
         update_grid(grid)
 

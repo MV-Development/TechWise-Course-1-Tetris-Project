@@ -3,6 +3,7 @@
 import pygame
 import sys
 import game_loop
+import pickle
 
 ##########################################################################################
 # Global Variables
@@ -14,6 +15,12 @@ BLOCK_SIZE = 30
 w_width = 800
 w_height = 800
 
+
+try:
+    with open('score.dat', 'rb') as file:
+        score = pickle.load(file)
+except:
+    score = 0
 
 class LShapeSprite(pygame.sprite.Sprite):
     def __init__(self):
@@ -214,10 +221,10 @@ def game_select():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
-                if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    diff_select(10)
-                elif 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
+                if 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
                     diff_select(5)
+                elif 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
+                    diff_select(10)
                 elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 550:
                     diff_select(15)
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
@@ -256,10 +263,10 @@ def diff_select(timeLimit):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
-                if 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
-                    game_loop.game(timeLimit, 2)
-                elif 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
+                if 320 <= mouse[0] <= 480 and 250 <= mouse[1] <= 350:
                     game_loop.game(timeLimit, 1)
+                elif 320 <= mouse[0] <= 480 and 350 <= mouse[1] <= 450:
+                    game_loop.game(timeLimit, 2)
                 elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 550:
                     game_loop.game(timeLimit, 3)
                 elif 320 <= mouse[0] <= 480 and 550 <= mouse[1] <= 650:
