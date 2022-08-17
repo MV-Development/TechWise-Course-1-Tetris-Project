@@ -262,7 +262,6 @@ def game(timeLimit, difficulty):
     next_pieces = deque(next_pieces)
     held = None
     round_hold = False
-    print(scores)
     for i in range(4):
         next_pieces.append(new_piece())
     while True:
