@@ -28,7 +28,6 @@ pygame.display.set_icon(program_icon)
 
 ##########################################################################################
 # High Scores
-d = shelve.open('highscores.txt')
 
 
 
