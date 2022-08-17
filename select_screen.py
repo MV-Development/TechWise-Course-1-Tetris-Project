@@ -3,6 +3,7 @@
 import sys
 import pygame
 import block_game
+import difficulty
 import interface
 import game_loop
 
@@ -48,11 +49,11 @@ def difficulty_select():
             # on event click
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if limit5_button.is_clicked():
-                    game_loop.game()
+                    difficulty.diff_select()
                 if limit10_button.is_clicked():
-                    game_loop.game()
+                    difficulty.diff_select()
                 if limit15_button.is_clicked():
-                    game_loop.game()
+                    difficulty.diff_select()
                 if quit_button.is_clicked():
                     pygame.quit()
                     sys.exit(0)

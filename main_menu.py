@@ -30,7 +30,6 @@ pygame.display.flip()
 # Take User Input
 while True:
     for event in pygame.event.get():
-        # on event click
         if event.type == pygame.MOUSEBUTTONDOWN:
             if start_button.is_clicked():
                 select_screen.difficulty_select()
