@@ -3,7 +3,7 @@ import pygame.time
 
 # CREATING HUD TO DISPLAY TIME AND SCORE
 
-def create_hud(screen, start_time, timeLimit):
+def create_hud(screen, start_time, time_limit):
     passed_time = 0
     game_clock = pygame.time.Clock()
     player_score = 0
@@ -14,7 +14,7 @@ def create_hud(screen, start_time, timeLimit):
     sec_str = str((passed_time % 60000) // 1000).zfill(2)
     mill_str = str(passed_time % 1000).zfill(3)
     score_str = ('{min}:{sec}:{mil}'.format(min=min_str, sec=sec_str, mil=mill_str))
-    if int(min_str) >= timeLimit:
+    if int(min_str) >= time_limit:
         min_str = -1
     text = font.render(str(score_str), True, font_color)
     screen.fill((0, 0, 0), (0, 0, 800, 100))
