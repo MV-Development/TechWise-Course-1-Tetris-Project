@@ -8,6 +8,7 @@ import interface
 import hud
 import pieces
 import game_over
+from collections import deque
 
 SCREEN = block_game.screen
 SIZE = block_game.SIZE
@@ -79,7 +80,7 @@ def hold_display(held):
         row = list(row)
         for x, col in enumerate(row):
             if col == 'o':
-                pygame.draw.rect(screen, held.color,
+                pygame.draw.rect(SCREEN, held.color,
                                  (50 + x * BLOCK_SIZE, 140 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
 
 
@@ -171,6 +172,13 @@ def new_piece():
     return pieces.Piece(5, 0, random.choice(PIECE_NAMES))
 
 
+def instant_drop(tetro, grid):
+    while empty_space(tetro, grid) and tetro.y < len(grid) + 1:
+        tetro.y += 1
+    if not (empty_space(tetro, grid)):
+        tetro.y -= 1
+
+
 def empty_space(tetro, grid):
     valid_grid = [[(col, row) for col in range(10) if grid[row][col] == interface.BLACK] for row in range(20)]
     valid_grid = [col for sublist in valid_grid for col in sublist]
@@ -182,34 +190,107 @@ def empty_space(tetro, grid):
     return True
 
 
+def get_min_speed(difficulty):
+    if difficulty == 1:
+        return .28
+    elif difficulty == 2:
+        return .24
+    else:
+        return .2
+
+
+def get_max_speed(difficulty):
+    if difficulty == 1:
+        return .12
+    elif difficulty == 2:
+        return .08
+    else:
+        return .04
+
+
+########################################################################################################################
+# Text Markers
+
+def text_maker1(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(SCREEN, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font1.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    SCREEN.blit(text_surface, text_rect)
+
+
+def text_maker2(text, size, text_color, rect_color, left, top, width, height):
+    button = pygame.draw.rect(SCREEN, rect_color, pygame.Rect(left, top, width, height))
+    font = pygame.font.Font("font2.ttf", size)
+    text_surface = font.render(text, False, text_color)
+    text_rect = text_surface.get_rect(center=button.center)
+    SCREEN.blit(text_surface, text_rect)
+
+
 ########################################################################################################################
 # Main Game loop
-def game():
+def game(time_limit, difficulty):
+    # change screen color
     SCREEN.fill(interface.BLACK)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load('game_song.mp3')
+    pygame.mixer.music.play(-1)
+
+    # quit button
+    text_maker2('Quit', 50, interface.BLACK, interface.RED, 600, 720, 150, 60)
+
+    # new_piece()
+    draw_lines()
     start_time = pygame.time.get_ticks()
     fallen = {}
+    grid = create_grid(fallen)
     active_piece = new_piece()
-    next_piece = new_piece()
     change_piece = False
     clock = pygame.time.Clock()
     active_time = 0
-    active_fall_speed = 0.1
+    min_speed = get_min_speed(difficulty)
+    max_speed = get_max_speed(difficulty)
+    active_fall_speed = min_speed
     score = 0
-    draw_lines()
+    minutes = "00"
+    next_pieces = []
+    next_pieces = deque(next_pieces)
+    held = None
+    round_hold = False
+    for i in range(4):
+        next_pieces.append(new_piece())
     while True:
+        hold_box()
         grid = create_grid(fallen)
-        draw_next_piece(next_piece)
-        hud.create_hud(SCREEN, start_time)
+        draw_next_piece(next_pieces)
+        fall_interval = (min_speed - max_speed) / time_limit
+        game_limit = hud.create_hud(SCREEN, start_time, time_limit)
+        if minutes != game_limit:
+            active_fall_speed -= fall_interval
+            minutes = str(game_limit)
+        if game_limit == -1:
+            game_over.game_over(score)
         display_score(score)
         clock.tick(30)
         active_time += clock.get_rawtime()
+        if held:
+            hold_display(held)
 
         for event in pygame.event.get():
-            # space bar quits game
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # get mouse position
+                mouse = pygame.mouse.get_pos()
+                if 600 <= mouse[0] <= 750 and 720 <= mouse[1] <= 820:
                     pygame.quit()
                     sys.exit(0)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_z:
+                    if held is None and not round_hold:
+                        held, active_piece, next_pieces = hold(active_piece, next_pieces)
+                        round_hold = True
+                    elif not round_hold:
+                        held, active_piece = swap_hold(held, active_piece)
+                        round_hold = True
                 if event.key == pygame.K_RIGHT:
                     active_piece.x += 1
                     if not (empty_space(active_piece, grid)):
@@ -226,6 +307,8 @@ def game():
                     active_piece.rotation += 1 % len(active_piece.tetro)
                     if not (empty_space(active_piece, grid)):
                         active_piece.rotation -= 1
+                if event.key == pygame.K_SPACE:
+                    instant_drop(active_piece, grid)
 
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -247,9 +330,9 @@ def game():
             for pos in tetro_pos:
                 n = (pos[0], pos[1])
                 fallen[n] = active_piece.color
-
-            active_piece = next_piece
-            next_piece = new_piece()
+            round_hold = False
+            active_piece = next_pieces.popleft()
+            next_pieces.append(new_piece())
             change_piece = False
             score = clear_rows(grid, fallen, score)
         if lose_game(fallen):
