@@ -7,7 +7,7 @@ import hud
 import pieces
 import main_menu
 from collections import deque
-import cPickle
+import pickle
 
 ##########################################################################################
 # Global Variables
