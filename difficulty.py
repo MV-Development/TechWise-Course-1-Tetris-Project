@@ -15,16 +15,15 @@ def diff_select():  # time_limit):
     # Difficulty buttons
     easy_button = interface.MenuButton(screen, interface.GREEN, SIZE * (320 / 800), SIZE * (250 / 800), SIZE, 'EASY',
                                        interface.WHITE, 'franklingothicmedium', int(SIZE * (28 / 800)))
+    easy_button.draw_button()
     medium_button = interface.MenuButton(screen, interface.BLUE, SIZE * (320 / 800), SIZE * (350 / 800), SIZE, 'MEDIUM',
                                          interface.WHITE, 'franklingothicmedium', int(SIZE * (28 / 800)))
+    medium_button.draw_button()
     hard_button = interface.MenuButton(screen, interface.RED, SIZE * (320 / 800), SIZE * (450 / 800), SIZE, 'HARD',
                                        interface.WHITE, 'franklingothicmedium', int(SIZE * (28 / 800)))
+    hard_button.draw_button()
     quit_button = interface.MenuButton(screen, interface.RED, SIZE * (320 / 800), SIZE * (550 / 800), SIZE, 'QUIT',
                                        interface.BLACK, 'franklingothicmedium', int(SIZE * (28 / 800)))
-
-    easy_button.draw_button()
-    medium_button.draw_button()
-    hard_button.draw_button()
     quit_button.draw_button()
 
     while True:
@@ -64,5 +63,5 @@ def diff_select():  # time_limit):
         # text_maker2('HARD', 32, BLACK, (141, 238, 238), 320, 450, 160, 100)
         # text_maker2('Quit', 32, BLACK, RED, 320, 550, 160, 100)
 
-        pygame.mouse.set_visible(True)
-        pygame.display.flip()
+        # pygame.mouse.set_visible(True)
+        # pygame.display.flip()

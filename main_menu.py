@@ -32,7 +32,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             if start_button.is_clicked():
-                select_screen.difficulty_select()
+                select_screen.time_select()
             if quit_button.is_clicked():
                 pygame.quit()
                 sys.exit(0)
