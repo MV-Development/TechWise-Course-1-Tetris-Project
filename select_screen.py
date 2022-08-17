@@ -49,14 +49,17 @@ def time_select():
             # on event click
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if limit5_button.is_clicked():
-                    game_loop.game()
-                    # difficulty.diff_select(5)
+                    print("limit 5 clicked")
+                    # game_loop.game()
+                    difficulty.difficulty_select(5)
                 if limit10_button.is_clicked():
-                    game_loop.game()
-                    # difficulty.diff_select(10)
+                    print("limit 10 clicked")
+                    # game_loop.game()
+                    difficulty.difficulty_select(10)
                 if limit15_button.is_clicked():
-                    game_loop.game()
-                    # difficulty.diff_select(15)
+                    print("limit 15 clicked")
+                    # game_loop.game()
+                    difficulty.difficulty_select(15)
                 if quit_button.is_clicked():
                     pygame.quit()
                     sys.exit(0)

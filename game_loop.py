@@ -89,7 +89,7 @@ def hold_box():
                      (SIZE * (50 / 800), SIZE * (130 / 800), SIZE * (150 / 800), SIZE * (150 / 800)))
     pygame.draw.rect(SCREEN, interface.WHITE,
                      (SIZE * (50 / 800), SIZE * (130 / 800), SIZE * (150 / 800), SIZE * (150 / 800)), 3)
-    font = pygame.font.Font('font2.ttf', 28)
+    font = pygame.font.SysFont('franklingothicmedium', 28)
     held_text = font.render('Held', False, interface.WHITE)
     SCREEN.blit(held_text, (95, 93, 30, 30))
 
@@ -211,20 +211,20 @@ def get_max_speed(difficulty):
 ########################################################################################################################
 # Text Markers
 
-def text_maker1(text, size, text_color, rect_color, left, top, width, height):
-    button = pygame.draw.rect(SCREEN, rect_color, pygame.Rect(left, top, width, height))
-    font = pygame.font.Font("font1.ttf", size)
-    text_surface = font.render(text, False, text_color)
-    text_rect = text_surface.get_rect(center=button.center)
-    SCREEN.blit(text_surface, text_rect)
+# def text_maker1(text, size, text_color, rect_color, left, top, width, height):
+#    button = pygame.draw.rect(SCREEN, rect_color, pygame.Rect(left, top, width, height))
+#    font = pygame.font.Font("font1.ttf", size)
+#    text_surface = font.render(text, False, text_color)
+#    text_rect = text_surface.get_rect(center=button.center)
+#    SCREEN.blit(text_surface, text_rect)
 
 
-def text_maker2(text, size, text_color, rect_color, left, top, width, height):
-    button = pygame.draw.rect(SCREEN, rect_color, pygame.Rect(left, top, width, height))
-    font = pygame.font.Font("font2.ttf", size)
-    text_surface = font.render(text, False, text_color)
-    text_rect = text_surface.get_rect(center=button.center)
-    SCREEN.blit(text_surface, text_rect)
+# def text_maker2(text, size, text_color, rect_color, left, top, width, height):
+#    button = pygame.draw.rect(SCREEN, rect_color, pygame.Rect(left, top, width, height))
+#    font = pygame.font.Font("font2.ttf", size)
+#    text_surface = font.render(text, False, text_color)
+#    text_rect = text_surface.get_rect(center=button.center)
+#    SCREEN.blit(text_surface, text_rect)
 
 
 ########################################################################################################################
@@ -232,18 +232,18 @@ def text_maker2(text, size, text_color, rect_color, left, top, width, height):
 def game(time_limit, difficulty):
     # change screen color
     SCREEN.fill(interface.BLACK)
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load('game_song.mp3')
-    pygame.mixer.music.play(-1)
+    # pygame.mixer.music.stop()
+    # pygame.mixer.music.load('game_song.mp3')
+    # pygame.mixer.music.play(-1)
 
     # quit button
-    text_maker2('Quit', 50, interface.BLACK, interface.RED, 600, 720, 150, 60)
+    # text_maker2('Quit', 50, interface.BLACK, interface.RED, 600, 720, 150, 60)
 
     # new_piece()
     draw_lines()
     start_time = pygame.time.get_ticks()
     fallen = {}
-    grid = create_grid(fallen)
+    # grid = create_grid(fallen)
     active_piece = new_piece()
     change_piece = False
     clock = pygame.time.Clock()
@@ -264,7 +264,7 @@ def game(time_limit, difficulty):
         grid = create_grid(fallen)
         draw_next_piece(next_pieces)
         fall_interval = (min_speed - max_speed) / time_limit
-        game_limit = hud.create_hud(SCREEN, start_time, time_limit)
+        game_limit = hud.create_hud02(SCREEN, start_time, time_limit)
         if minutes != game_limit:
             active_fall_speed -= fall_interval
             minutes = str(game_limit)

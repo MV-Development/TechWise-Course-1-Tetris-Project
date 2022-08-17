@@ -10,7 +10,7 @@ screen = block_game.screen
 SIZE = block_game.SIZE
 
 
-def diff_select(time_limit):
+def difficulty_select(time_limit):
     ####################################################################################################################
     # Difficulty buttons
     easy_button = interface.MenuButton(screen, interface.GREEN, SIZE * (320 / 800), SIZE * (250 / 800), SIZE, 'EASY',
