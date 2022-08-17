@@ -56,6 +56,46 @@ def lose_game(fallen):
             return True
 
 
+########################################################################################################################
+# Hold Piece
+
+def hold(active_piece, next_pieces):
+    held = active_piece
+    active_piece = next_pieces.popleft()
+    next_pieces.append(new_piece())
+    return held, active_piece, next_pieces
+
+
+def swap_hold(held, active_piece):
+    held, active_piece = active_piece, held
+    active_piece.x, active_piece.y = 5, 0
+    return held, active_piece
+
+
+def hold_display(held):
+    shape = held.tetro[held.rotation % len(held.tetro)]
+
+    for y, row in enumerate(shape):
+        row = list(row)
+        for x, col in enumerate(row):
+            if col == 'o':
+                pygame.draw.rect(screen, held.color,
+                                 (50 + x * BLOCK_SIZE, 140 + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
+
+
+def hold_box():
+    pygame.draw.rect(SCREEN, interface.BLACK,
+                     (SIZE * (50 / 800), SIZE * (130 / 800), SIZE * (150 / 800), SIZE * (150 / 800)))
+    pygame.draw.rect(SCREEN, interface.WHITE,
+                     (SIZE * (50 / 800), SIZE * (130 / 800), SIZE * (150 / 800), SIZE * (150 / 800)), 3)
+    font = pygame.font.Font('font2.ttf', 28)
+    held_text = font.render('Held', False, interface.WHITE)
+    SCREEN.blit(held_text, (95, 93, 30, 30))
+
+
+########################################################################################################################
+# Game Logic
+
 def clear_rows(grid, fallen, score):
     i = 0
     for row in range(len(grid)):

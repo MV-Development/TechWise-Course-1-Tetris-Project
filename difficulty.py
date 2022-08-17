@@ -10,7 +10,7 @@ screen = block_game.screen
 SIZE = block_game.SIZE
 
 
-def diff_select():  # time_limit):
+def diff_select(time_limit):
     ####################################################################################################################
     # Difficulty buttons
     easy_button = interface.MenuButton(screen, interface.GREEN, SIZE * (320 / 800), SIZE * (250 / 800), SIZE, 'EASY',
@@ -33,11 +33,11 @@ def diff_select():  # time_limit):
                 # get mouse position
                 mouse = pygame.mouse.get_pos()
                 if easy_button.is_clicked():
-                    game_loop.game()  # time_limit, 1)
+                    game_loop.game(time_limit, 1)
                 elif medium_button.is_clicked():
-                    game_loop.game()  # time_limit, 2)
+                    game_loop.game(time_limit, 2)
                 elif hard_button.is_clicked():
-                    game_loop.game()  # time_limit, 3)
+                    game_loop.game(time_limit, 3)
                 elif quit_button.is_clicked():
                     pygame.quit()
                     sys.exit(0)
